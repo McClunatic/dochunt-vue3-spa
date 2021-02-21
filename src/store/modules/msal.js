@@ -42,6 +42,10 @@ const getters = {
     if (state.account === null) return null
     const claims = state.account.idTokenClaims
     return `${claims.given_name} ${claims.family_name}`
+  },
+  instance(state) {
+    if (!state.instanceCreated) return null
+    return msalInstance
   }
 }
 

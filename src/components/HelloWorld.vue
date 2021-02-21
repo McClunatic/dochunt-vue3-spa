@@ -7,8 +7,8 @@
   </p>
 
   <button @click="state.count++">count is: {{ state.count }}</button>
-  <button @click="callApi">Call API</button>
-  <p v-if="apiResponse">{{ apiResponse }}</p>
+  <button @click="getMessage">Get message from API</button>
+  <p v-if="state.message">{{ state.message }}</p>
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { defineProps, reactive } from 'vue'
+import { computed, defineProps, reactive } from 'vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
 
@@ -25,34 +25,36 @@ defineProps({
 })
 
 const store = useStore()
-const state = reactive({ count: 0 })
-const apiResponse = reactive('')
+const state = reactive({ count: 0, message: '' })
 
-function callApi() {
-  if (store.state.msal.account === null) return
+const msalAccount = computed(() => store.state.msal.account)
+const msalScopes = computed(() => store.state.msal.scopes)
+
+async function getMessage() {
+  if (msalAccount.value === null) return
 
   // TODO: pull API endpoint definitions out of here
   const endpoint = import.meta.env.PROD
     ? 'https://paper-scope-6-api.azurewebsites.net'
     : 'http://127.0.0.1:21383/'
 
-  msalApp.acquireTokenSilent({
-    account: store.state.msal.account,
-    scopes: store.state.msal.scopes
-  }).then((res) => {
+  const msalInstance = store.getters['msal/instance']
+  const tokenRequest =  {
+    account: msalAccount.value,
+    scopes: msalScopes.value
+  }
+  try {
+    const response = await msalInstance.acquireTokenSilent(tokenRequest)
     console.log('acquireTokenSilent result:');
-    console.log(res);
-    headers = { Authorization: `Bearer ${res.accessToken}` }
-    return axios.get(endpoint, { headers });
-  })
-  .then((res) => {
+    console.log(response);
+    const headers = { Authorization: `Bearer ${response.accessToken}` }
+    const apiResponse = await axios.get(endpoint, { headers })
     console.log('API request result:');
-    console.log(res);
-    apiResponse.value = res.data.message;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    console.log(apiResponse);
+    state.message = apiResponse.data.message;
+  } catch (error) {
+    console.log(error);
+  }
 }
 </script>
 
