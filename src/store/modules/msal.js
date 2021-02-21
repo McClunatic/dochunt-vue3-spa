@@ -15,7 +15,7 @@ var msalInstance = null
 const state = () => ({
   config: {
     auth: {
-      clientId: 'f95c6431-ef71-4809-ab02-0c94c11a71ee',
+      clientId: 'f1162a25-8ad7-4118-9b81-a9827603fa0c',
       authority:
       'https://clunacy.b2clogin.com/clunacy.onmicrosoft.com/' +
       'B2C_1_paperscope_signupsignin',
@@ -30,7 +30,7 @@ const state = () => ({
   },
   scopes: [
     'https://clunacy.onmicrosoft.com/' +
-    '7ea70574-6eb1-42f2-ab65-d88d33884ccb/user.impersonate',
+    '35b7836b-13d4-433b-b3d1-7d165353a6ad/user.impersonate',
   ],
   account: null,
   instanceCreated: false
