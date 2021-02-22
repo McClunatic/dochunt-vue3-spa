@@ -45,15 +45,17 @@ async function getMessage() {
   }
   try {
     const response = await msalInstance.acquireTokenSilent(tokenRequest)
-    console.log('acquireTokenSilent result:');
-    console.log(response);
+    console.log('acquireTokenSilent result:')
+    console.log(response)
     const headers = { Authorization: `Bearer ${response.accessToken}` }
     const apiResponse = await axios.get(endpoint, { headers })
-    console.log('API request result:');
-    console.log(apiResponse);
+    console.log('API request result:')
+    console.log(apiResponse)
     state.message = apiResponse.data.message;
   } catch (error) {
-    console.log(error);
+    console.log('Caught error:')
+    console.log(error.message)
+    console.log(error.response)
   }
 }
 </script>
