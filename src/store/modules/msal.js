@@ -18,7 +18,7 @@ const state = () => ({
       clientId: 'f1162a25-8ad7-4118-9b81-a9827603fa0c',
       authority:
       'https://clunacy.b2clogin.com/clunacy.onmicrosoft.com/' +
-      'B2C_1_paperscope_signupsignin',
+      'B2C_1A_signup_signin',
       knownAuthories: 'clunacy.b2clogin.com',
       redirectUri: import.meta.env.PROD
         ? 'https://paper-scope-6.azurewebsites.net/'
