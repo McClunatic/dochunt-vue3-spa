@@ -1,6 +1,9 @@
 <template>
   <nav-bar />
-  <img alt="Vue logo" src="../assets/logo.png" />
+  <img
+    alt="Vue logo"
+    src="../assets/logo.png"
+  >
   <hello-world :msg="msg" />
 </template>
 

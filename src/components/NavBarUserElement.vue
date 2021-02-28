@@ -5,10 +5,16 @@
   >
     <a class="navbar-link">{{ username }}</a>
     <div class="navbar-dropdown">
-      <a class="navbar-item" href="#">
+      <a
+        class="navbar-item"
+        href="#"
+      >
         Profile
       </a>
-      <a class="navbar-item" @click="signOut">
+      <a
+        class="navbar-item"
+        @click="signOut"
+      >
         Sign out
       </a>
     </div>
@@ -18,9 +24,12 @@
     class="navbar-item"
   >
     <div class="buttons">
-      <button class="button" @click="signIn">
+      <button
+        class="button"
+        @click="signIn"
+      >
         <span class="icon">
-          <i class="fas fa-sign-in-alt"></i>
+          <i class="fas fa-sign-in-alt" />
         </span>
         <span>Sign in</span>
       </button>
