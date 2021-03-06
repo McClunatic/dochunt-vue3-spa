@@ -5,15 +5,15 @@
     aria-role="main navigation"
   >
     <div class="navbar-brand">
-      <a
+      <router-link
         class="navbar-item"
-        href="#"
+        to="/"
       >
         <img
-          alt="Vue logo"
-          src="../assets/paper-scope-6-reishi-crosshair.png"
+          alt="Paper Scope 6 logo"
+          src="../assets/paper-scope-6-reishi-crosshair-primary.png"
         >
-      </a>
+      </router-link>
       <a
         role="button"
         class="navbar-burger"
@@ -33,12 +33,33 @@
       :class="{ 'is-active': isActive }"
     >
       <div class="navbar-start">
+        <router-link
+          class="navbar-item"
+          to="/"
+        >
+          Home
+        </router-link>
         <a
           class="navbar-item"
           href="#"
         >
-          Documentation
+          Docs
         </a>
+        <div
+          v-if="route.path === '/search'"
+          class="navbar-item"
+        >
+          <search-input />
+        </div>
+        <div
+          v-if="route.path === '/search'"
+          class="navbar-item"
+        >
+          <div class="buttons">
+            <scope-search-button />
+            <search-button />
+          </div>
+        </div>
       </div>
       <div
         v-if="authEnabled"
@@ -52,8 +73,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import SearchInput from './SearchInput.vue'
+import ScopeSearchButton from './ScopeSearchButton.vue'
+import SearchButton from './SearchButton.vue'
 import NavBarUserElement from './NavBarUserElement.vue'
+
+const route = useRoute()
 let isActive = ref(window.innerWidth >= 1024)
+
 const toggleMenu = () => {
   isActive.value = !isActive.value
 }

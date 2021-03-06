@@ -2,12 +2,17 @@ import { computed } from 'vue'
 import { createWebHistory, createRouter } from 'vue-router'
 import store from '../store'
 import Home from '../views/Home.vue'
+import Search from '../views/Search.vue'
 import Unauthenticated from '../views/Unauthenticated.vue'
 
 const routes = [
   {
     path: '/',
     component: Home
+  },
+  {
+    path: '/search',
+    component: Search
   },
   {
     path: '/unauthenticated',

@@ -7,9 +7,6 @@
           <div class="column is-10 is-offset-1">
             <logo class="margined" />
           </div>
-          <div class="column is-full">
-            <search-form />
-          </div>
         </div>
       </div>
     </div>
@@ -19,7 +16,6 @@
 <script setup>
 import Logo from '../components/Logo.vue'
 import NavBar from '../components/NavBar.vue'
-import SearchForm from '../components/SearchForm.vue'
 </script>
 
 <style>
