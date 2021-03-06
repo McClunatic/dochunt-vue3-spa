@@ -11,8 +11,7 @@
       >
         <img
           alt="Vue logo"
-          src="../assets/logo.png"
-          height="28"
+          src="../assets/paper-scope-6-reishi-crosshair.png"
         >
       </a>
       <a

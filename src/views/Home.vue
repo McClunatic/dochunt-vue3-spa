@@ -1,20 +1,37 @@
 <template>
-  <nav-bar />
-  <img
-    alt="Vue logo"
-    src="../assets/logo.png"
-  >
-  <hello-world :msg="msg" />
+  <div class="is-flex is-flex-direction-column">
+    <nav-bar class="is-flow-grow-0" />
+    <div class="columns is-centered is-vcentered is-flex-grow-1">
+      <div class="column is-three-fifths">
+        <div class="columns is-multiline">
+          <div class="column is-10 is-offset-1">
+            <logo class="margined" />
+          </div>
+          <div class="column is-full">
+            <search-bar />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import Logo from '../components/Logo.vue'
 import NavBar from '../components/NavBar.vue'
-import HelloWorld from '../components/HelloWorld.vue'
-
-const store = useStore();
-const account = computed(() => store.state.msal.account)
-const username = computed(() => store.getters['msal/username'] || '<unknown>')
-const msg = computed(() => `Hi ${username.value} from Vue Router!`)
+import SearchBar from '../components/SearchBar.vue'
 </script>
+
+<style>
+.margined {
+  margin-bottom: 16px;
+}
+
+.is-flex.is-flex-direction-column {
+  height: 98%;
+}
+
+.column.is-three-fifths {
+  margin-bottom: 25vh;
+}
+</style>

@@ -12,7 +12,7 @@ store.dispatch('msal/createInstance')
 @import 'bulma/css/bulma.css';
 @import '@fortawesome/fontawesome-free/css/all.css';
 
-#app {
-  text-align: center;
+html, body, #app {
+  height: 100%;
 }
 </style>
