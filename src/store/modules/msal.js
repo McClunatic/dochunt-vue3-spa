@@ -82,8 +82,8 @@ const actions = {
     try {
       loginResponse = await msalInstance.ssoSilent(loginRequest)
     } catch (error) {
-      if (!error instanceof InteractionRequiredAuthError &&
-          !error instanceof BrowserAuthError )
+      if (!(error instanceof InteractionRequiredAuthError) &&
+          !(error instanceof BrowserAuthError) )
         throw error
       loginResponse = await msalInstance.loginPopup(loginRequest)
     }
