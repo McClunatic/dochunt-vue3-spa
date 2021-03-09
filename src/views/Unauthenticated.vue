@@ -1,6 +1,6 @@
 <template>
   <nav-bar />
-  <h1>Unauthenticated</h1> 
+  <h1>Unauthenticated</h1>
   <p>Sorry! You are not authenticated. Please sign in!</p>
 </template>
 
