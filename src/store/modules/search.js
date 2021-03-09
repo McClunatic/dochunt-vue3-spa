@@ -2,7 +2,8 @@ import axios from 'axios'
 
 // initial state
 const state = () => ({
-  results: []
+  results: [],
+  loading: false
 })
 
 // getters
@@ -12,6 +13,9 @@ const getters = {}
 const mutations = {
   updateResults(state, results) {
     state.results = results
+  },
+  updateLoading(state, loading) {
+    state.loading = loading
   }
 }
 
@@ -28,6 +32,7 @@ const actions = {
     }
     let results = []
     try {
+      commit('updateLoading', true)
       const response = await msalInstance.acquireTokenSilent(tokenRequest)
       const headers = { Authorization: `Bearer ${response.accessToken}` }
       const apiResponse = await axios.get(`${endpoint}/search`, { headers })
@@ -38,6 +43,7 @@ const actions = {
       console.log(error.response)
     }
     commit('updateResults', results)
+    commit('updateLoading', false)
   }
 }
 
