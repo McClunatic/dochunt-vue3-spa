@@ -2,10 +2,16 @@
   <div class="is-flex is-flex-direction-column">
     <nav-bar class="is-flow-grow-0" />
     <div class="columns is-centered is-vcentered is-flex-grow-1">
-      <div class="container is-fluid">
+      <div class="container is-fluid is-centered">
+        <p
+          v-if="loading"
+          class="has-text-centered"
+        >
+          Loading...
+        </p>
         <table
+          v-else-if="results.length > 0"
           class="table margined"
-          v-if="results"
         >
           <thead>
             <tr>
@@ -31,7 +37,12 @@
             </tr>
           </tbody>
         </table>
-        <p v-else>No results to display.</p>
+        <p
+          v-else
+          class="has-text-centered"
+        >
+          No results to display.
+        </p>
       </div>
     </div>
   </div>
@@ -46,6 +57,7 @@ import NavBar from '../components/NavBar.vue'
 const route = useRoute()
 const store = useStore()
 const results = computed(() => store.state.search.results)
+const loading = computed(() => store.state.search.loading)
 
 const displayResults = computed(() => {
   const cond = (({ id, title, author, date}) => ({ id, title, author, date}))
