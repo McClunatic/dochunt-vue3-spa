@@ -42,8 +42,9 @@
           <td
             v-for="name in columns"
             :key="name"
+            :class="{ 'date-text': name.toLowerCase() === 'date' }"
           >
-            {{ result[name] }}
+            {{ format(result[name]) }}
           </td>
         </tr>
       </tbody>
@@ -71,6 +72,17 @@ const time = computed(() => store.state.search.time)
 const columns = ['id', 'title', 'author', 'date']
 const sortColumns = ref([])
 
+const format = data => {
+  const re =
+    /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/
+  if (re.test(data))
+    return new Intl.DateTimeFormat(
+      'en-US',
+      { dateStyle: 'medium' }
+    ).format(Date.parse(data))
+  else return data
+}
+
 const sortIcon = name => {
   const found = sortColumns.value.find(elem => elem.name === name)
   if (found === undefined) return 'fa-sort'
@@ -93,7 +105,6 @@ const sortedResults = computed(() => {
   if (sortColumns.value.length === 0) return results.value
   else return [...results.value].sort((a, b) => {
     for (let column of sortColumns.value) {
-      console.log(column)
       if (a[column.name] < b[column.name]) return -column.descending
       else if (a[column.name] > b[column.name]) return column.descending
     }
@@ -129,6 +140,10 @@ th:hover {
 
 .icon-text {
   display: inline;
+  white-space: nowrap;
+}
+
+.date-text {
   white-space: nowrap;
 }
 </style>
