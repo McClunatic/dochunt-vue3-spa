@@ -7,26 +7,26 @@
   </p>
   <table
     v-else-if="results.length > 0"
-    class="table margined"
+    class="table container"
   >
     <thead>
       <tr>
         <th
           v-for=" name in columns"
           :key="name"
+          @click="updateSortColumns(name)"
         >
-          <span @click="updateSortColumns(name)">
-            {{ name }}
-            <span class="icon">
+          <span class="icon-text">
+            <span>{{ name }}</span>
+            <span class="icon sort-icon">
               <i :class="['fas', sortIcon(name)]" />
             </span>
-          </span>
-          <span
-            v-if="sortIndex(name) > -1"
-            @click="removeSortColumns(name)"
-          >
-            {{ sortIndex(name) + 1 }}
-            <span class="icon">
+            <span v-if="sortIndex(name) > -1">{{ sortIndex(name) + 1 }}</span>
+            <span
+              v-if="sortIndex(name) > -1"
+              class="icon remove-icon"
+              @click.stop="removeSortColumns(name)"
+            >
               <i class="fas fa-times-circle" />
             </span>
           </span>
@@ -110,7 +110,16 @@ watch(
   margin-top: 16px;
 }
 
-span.icon {
-  margin-left: 1rem;
+.fa-sort, .remove-icon {
+  color: lightgray;
+}
+
+.remove-icon:hover {
+  color: gray;
+}
+
+.icon-text {
+  display: inline;
+  white-space: nowrap;
 }
 </style>
