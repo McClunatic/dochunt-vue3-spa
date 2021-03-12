@@ -115,6 +115,10 @@ p.container {
   margin-bottom: 0.45rem;
 }
 
+th:hover {
+  border-color: darkgray;
+}
+
 .fa-sort, .remove-icon {
   color: lightgray;
 }
