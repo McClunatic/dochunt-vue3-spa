@@ -80,7 +80,7 @@ import SearchButton from './SearchButton.vue'
 import NavBarUserElement from './NavBarUserElement.vue'
 
 const route = useRoute()
-let isActive = ref(window.innerWidth >= 1024)
+let isActive = ref(false)
 
 const toggleMenu = () => {
   isActive.value = !isActive.value
