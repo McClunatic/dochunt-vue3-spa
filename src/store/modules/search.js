@@ -35,7 +35,7 @@ const actions = {
       commit('updateLoading', true)
       const response = await msalInstance.acquireTokenSilent(tokenRequest)
       const headers = { Authorization: `Bearer ${response.accessToken}` }
-      const apiResponse = await axios.get(`${endpoint}/search`, { headers })
+      const apiResponse = await axios.get(`${endpoint}/search/`, { headers })
       console.log(apiResponse)
       results = apiResponse.data
     } catch (error) {
