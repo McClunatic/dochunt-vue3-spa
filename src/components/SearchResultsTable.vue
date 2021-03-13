@@ -69,7 +69,7 @@ const results = computed(() => store.state.search.results)
 const loading = computed(() => store.state.search.loading)
 const time = computed(() => store.state.search.time)
 
-const columns = ['id', 'title', 'author', 'date']
+const columns = ['id', 'title', 'author', 'date', 'similarity']
 const sortColumns = ref([])
 
 const format = data => {
