@@ -14,5 +14,7 @@ store.dispatch('msal/createInstance')
 
 html, body, #app {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 </style>
