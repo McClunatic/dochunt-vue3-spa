@@ -6,7 +6,7 @@
   </div>
   <div class="columns is-centered">
     <div class="column is-11">
-      <search-results-table />
+      <router-view></router-view>
     </div>
   </div>
   <footer />
@@ -14,7 +14,6 @@
 
 <script setup>
 import NavBar from '../components/NavBar.vue'
-import SearchResultsTable from '../components/SearchResultsTable.vue'
 import SearchStats from '../components/SearchStats.vue'
 import SearchTabs from '../components/SearchTabs.vue'
 </script>

@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import store from '../store'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
+import SearchResultsTable from '../components/SearchResultsTable.vue'
 import Unauthenticated from '../views/Unauthenticated.vue'
 
 const routes = [
@@ -11,8 +12,25 @@ const routes = [
     component: Home
   },
   {
-    path: '/search/:tab',
-    component: Search
+    path: '/search',
+    component: Search,
+    children: [
+      {
+        path: 'table',
+        component: SearchResultsTable,
+        beforeEnter: (to, from) => store.dispatch('search/updateTab', 'table')
+      },
+      {
+        path: 'cards',
+        component: SearchResultsTable,
+        beforeEnter: (to, from) => store.dispatch('search/updateTab', 'cards')
+      },
+      {
+        path: 'plot',
+        component: SearchResultsTable,
+        beforeEnter: (to, from) => store.dispatch('search/updateTab', 'plot')
+      }
+    ]
   },
   {
     path: '/unauthenticated',

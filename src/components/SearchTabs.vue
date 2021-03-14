@@ -23,10 +23,4 @@
   const route = useRoute()
   const store = useStore()
   const tab = computed(() => store.state.search.tab)
-
-  watch(
-    () => route.params,
-    params => params.tab && store.dispatch('search/updateTab', params.tab),
-    { immediate: true }
-  )
 </script>
