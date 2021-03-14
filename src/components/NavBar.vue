@@ -46,13 +46,13 @@
           Docs
         </a>
         <div
-          v-if="route.path === '/search'"
+          v-if="route.path.startsWith('/search')"
           class="navbar-item"
         >
           <search-input />
         </div>
         <div
-          v-if="route.path === '/search'"
+          v-if="route.path.startsWith('/search')"
           class="navbar-item"
         >
           <div class="buttons">

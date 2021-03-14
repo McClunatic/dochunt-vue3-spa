@@ -4,7 +4,8 @@ import axios from 'axios'
 const state = () => ({
   results: [],
   loading: false,
-  time: 0.0
+  time: 0.0,
+  tab: 'table'
 })
 
 // getters
@@ -20,6 +21,9 @@ const mutations = {
   },
   updateTime(state, time) {
     state.time = time
+  },
+  updateTab(state, tab) {
+    state.tab = tab
   }
 }
 
@@ -51,6 +55,9 @@ const actions = {
     }
     commit('updateResults', results)
     commit('updateLoading', false)
+  },
+  async updateTab(context, tab) {
+    context.commit('updateTab', tab)
   }
 }
 
