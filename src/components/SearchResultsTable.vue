@@ -5,51 +5,48 @@
   >
     Loading...
   </p>
-  <div v-else-if="results.length > 0">
-    <p class="container has-text-justified">
-      {{ results.length }} results found ({{ time }} ms)
-    </p>
-    <table class="table container">
-      <thead>
-        <tr>
-          <th
-            v-for="name in columns"
-            :key="name"
-            @click="updateSortColumns(name)"
-          >
-            <span class="icon-text">
-              <span>{{ name }}</span>
-              <span class="icon sort-icon">
-                <i :class="['fas', sortIcon(name)]" />
-              </span>
-              <span v-if="sortIndex(name) > -1">{{ sortIndex(name) + 1 }}</span>
-              <span
-                v-if="sortIndex(name) > -1"
-                class="icon remove-icon"
-                @click.stop="removeSortColumns(name)"
-              >
-                <i class="fas fa-times-circle" />
-              </span>
-            </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="result in sortedResults"
-          :key="result.id"
+  <table
+    v-else-if="results.length > 0"
+    class="table container">
+    <thead>
+      <tr>
+        <th
+          v-for="name in columns"
+          :key="name"
+          @click="updateSortColumns(name)"
         >
-          <td
-            v-for="name in columns"
-            :key="name"
-            :class="{ 'date-text': name.toLowerCase() === 'date' }"
-          >
-            {{ format(result[name]) }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          <span class="icon-text">
+            <span>{{ name }}</span>
+            <span class="icon sort-icon">
+              <i :class="['fas', sortIcon(name)]" />
+            </span>
+            <span v-if="sortIndex(name) > -1">{{ sortIndex(name) + 1 }}</span>
+            <span
+              v-if="sortIndex(name) > -1"
+              class="icon remove-icon"
+              @click.stop="removeSortColumns(name)"
+            >
+              <i class="fas fa-times-circle" />
+            </span>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="result in sortedResults"
+        :key="result.id"
+      >
+        <td
+          v-for="name in columns"
+          :key="name"
+          :class="{ 'date-text': name.toLowerCase() === 'date' }"
+        >
+          {{ format(result[name]) }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <p
     v-else
     class="has-text-centered"

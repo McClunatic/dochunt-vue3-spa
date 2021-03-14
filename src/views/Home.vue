@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-  <footer></footer>
+  <footer />
 </template>
 
 <script setup>
