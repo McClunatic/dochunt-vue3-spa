@@ -45,7 +45,7 @@ const router = createRouter({
 
 const account = computed(() => store.state.msal.account);
 
-if (import.meta.env.VITE_AUTH_ENABLED) {
+if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
   router.beforeEach(async (to) => {
     if (to.path !== '/unauthenticated' && account.value === null) {
       try {

@@ -41,12 +41,14 @@ const actions = {
     let results = []
     try {
       commit('updateLoading', true)
+      const opts = {}
+      if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
       const response = await msalInstance.acquireTokenSilent(tokenRequest)
-      const headers = { Authorization: `Bearer ${response.accessToken}` }
+        opts['headers'] = { Authorization: `Bearer ${response.accessToken}` }
+      }
       const startTime = new Date().getTime()
-      const apiResponse = await axios.get(`${endpoint}/search/`, { headers })
+      const apiResponse = await axios.get(`${endpoint}/search/`, opts)
       commit('updateTime', new Date().getTime() - startTime)
-      console.log(apiResponse)
       results = apiResponse.data
     } catch (error) {
       commit('updateTime', 0)

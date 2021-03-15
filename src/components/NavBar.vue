@@ -85,5 +85,5 @@ let isActive = ref(false)
 const toggleMenu = () => {
   isActive.value = !isActive.value
 }
-const authEnabled = import.meta.env.VITE_AUTH_ENABLED
+const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
 </script>
