@@ -15,11 +15,11 @@
         </p>
       </div>
       <div class="columns card-content">
-        <div class="column is-10">
+        <div class="column is-9">
           <span class="has-text-grey">{{ format(result.date) }} — </span>
           {{ terminate(result.description) }}
         </div>
-        <div class="column is-2 groups">
+        <div class="column is-3 groups">
           <span
             v-for="group in result.groups"
             :key="group"
@@ -75,8 +75,14 @@
   margin-top: 0.5rem;
 }
 
+.card-content > div, .card-header > p {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .card-content {
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
+  padding-top: 0.75rem;
   font-size: 0.9rem;
 }
 
