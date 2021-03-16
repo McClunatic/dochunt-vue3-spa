@@ -3,6 +3,7 @@
     class="pagination"
     role="navigation"
     aria-label="pagination"
+    :class="{'is-hidden': numPages === 0 || tab === 'plot'}"
   >
     <a
       class="pagination-previous"
@@ -85,6 +86,7 @@
 
   const page = computed(() => parseInt(route.query.p || '1'))
   const numPages = computed(() => store.getters['search/numPages'])
+  const tab = computed(() => store.state.search.tab)
 
   const switchPage = newPage => router.push({
     path: route.path,

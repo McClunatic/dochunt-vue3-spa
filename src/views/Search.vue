@@ -20,6 +20,7 @@
             />
           </transition>
         </router-view>
+        <search-results-pagination />
       </div>
     </div>
   </div>
@@ -30,6 +31,7 @@
   import NavBar from '../components/NavBar.vue'
   import SearchStats from '../components/SearchStats.vue'
   import SearchTabs from '../components/SearchTabs.vue'
+  import SearchResultsPagination from '../components/SearchResultsPagination.vue'
 
   const route = useRoute()
 </script>
@@ -50,8 +52,8 @@
     position: relative;
   }
 
-  .search-component {
+  .leaving {
     position: absolute;
-    top: 0;
+    top: 12px;  /* matching relative position of entering component */
   }
 </style>

@@ -54,7 +54,6 @@
     >
       No results to display.
     </p>
-    <search-results-pagination v-if="results.length > 0" />
   </div>
 </template>
 
@@ -62,7 +61,6 @@
   import { computed, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
   import { useStore } from 'vuex'
-  import SearchResultsPagination from './SearchResultsPagination.vue'
 
   const route = useRoute()
   const store = useStore()
