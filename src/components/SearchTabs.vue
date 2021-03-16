@@ -7,7 +7,10 @@
         :class="{ 'is-active': tab === tabName.toLowerCase() }"
       >
         <a @click="switchTab(tabName)">
-          {{ tabName }}
+          <span class="icon is-small">
+            <i :class="tabClass[tabName]" aria-hidden="true"></i>
+          </span>
+          <span>{{ tabName }}</span>
         </a>
       </li>
     </ul>
@@ -20,6 +23,11 @@
   import { useStore } from 'vuex'
 
   const tabs = ['Table', 'Cards', 'Plot']
+  const tabClass = {
+    Table: 'fas fa-table',
+    Cards: 'fas fa-address-card',
+    Plot: 'fas fa-chart-bar',
+  }
   const route = useRoute()
   const router = useRouter()
   const store = useStore()
