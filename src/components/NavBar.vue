@@ -59,8 +59,15 @@
           class="navbar-item"
         >
           <div class="buttons">
-            <scope-search-button @click.stop="doSearch()"/>
-            <search-button />
+            <a
+              class="button is-primary"
+              @click.stop="doSearch()"
+            >
+              Scope Search
+            </a>
+            <a class="button">
+              Search
+            </a>
           </div>
         </div>
       </div>
@@ -79,8 +86,6 @@
   import { useRoute, useRouter } from 'vue-router'
   import { useStore } from 'vuex'
   import SearchInput from './SearchInput.vue'
-  import ScopeSearchButton from './ScopeSearchButton.vue'
-  import SearchButton from './SearchButton.vue'
   import NavBarUserElement from './NavBarUserElement.vue'
 
   const route = useRoute()

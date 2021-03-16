@@ -6,10 +6,17 @@
     />
     <div class="field is-grouped centered">
       <div class="control">
-        <scope-search-button @click.stop="doSearch()"/>
+        <a
+          class="button is-primary"
+          @click.stop="doSearch()"
+        >
+          Scope Search
+        </a>
       </div>
       <div class="control">
-        <search-button />
+        <a class="button">
+          Search
+        </a>
       </div>
     </div>
   </div>
@@ -20,8 +27,6 @@
   import { useRouter } from 'vue-router'
   import { useStore } from 'vuex'
   import SearchInput from './SearchInput.vue'
-  import ScopeSearchButton from './ScopeSearchButton.vue'
-  import SearchButton from './SearchButton.vue'
 
   const router = useRouter()
   const store = useStore()
