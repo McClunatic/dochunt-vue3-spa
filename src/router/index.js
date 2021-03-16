@@ -50,22 +50,17 @@ const router = createRouter({
 router.afterEach((to, from) => {
   const toPage = to.query.p
   const fromPage = from.query.p
-  console.log(from.path, to.path)
-  console.log(fromPage, toPage)
   if (toPage === undefined || fromPage === undefined || toPage === fromPage) {
-    console.log(1)
     to.meta.enterClass = "animate__animated animate__fadeIn"
     to.meta.leaveClass = "animate__animated animate__fadeOut"
     from.meta.enterClass = "animate__animated animate__fadeIn"
     from.meta.leaveClass = "animate__animated animate__fadeOut"
   } else if (toPage < fromPage) {
-    console.log(2)
     to.meta.enterClass = "animate__animated animate__fadeInLeft"
     to.meta.leaveClass = "animate__animated animate__fadeOutRight"
     from.meta.enterClass = "animate__animated animate__fadeInRight"
     from.meta.leaveClass = "animate__animated animate__fadeOutLeft"
   } else {
-    console.log(3)
     to.meta.enterClass = "animate__animated animate__fadeInRight"
     to.meta.leaveClass = "animate__animated animate__fadeOutLeft"
     from.meta.enterClass = "animate__animated animate__fadeInLeft"
