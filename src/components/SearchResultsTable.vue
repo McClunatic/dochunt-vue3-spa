@@ -1,155 +1,159 @@
 <template>
-  <p
-    v-if="loading"
-    class="has-text-centered"
-  >
-    Loading...
-  </p>
-  <table
-    v-else-if="results.length > 0"
-    class="table container">
-    <thead>
-      <tr>
-        <th
-          v-for="name in columns"
-          :key="name"
-          @click="updateSortColumns(name)"
-        >
-          <span class="icon-text">
-            <span>{{ name }}</span>
-            <span class="icon sort-icon">
-              <i :class="['fas', sortIcon(name)]" />
+  <div>
+    <p
+      v-if="loading"
+      class="has-text-centered"
+    >
+      Loading...
+    </p>
+    <table
+      v-else-if="results.length > 0"
+      class="table container">
+      <thead>
+        <tr>
+          <th
+            v-for="name in columns"
+            :key="name"
+            @click="updateSortColumns(name)"
+          >
+            <span class="icon-text">
+              <span>{{ name }}</span>
+              <span class="icon sort-icon">
+                <i :class="['fas', sortIcon(name)]" />
+              </span>
+              <span v-if="sortIndex(name) > -1">{{ sortIndex(name) + 1 }}</span>
+              <span
+                v-if="sortIndex(name) > -1"
+                class="icon remove-icon"
+                @click.stop="removeSortColumns(name)"
+              >
+                <i class="fas fa-times-circle" />
+              </span>
             </span>
-            <span v-if="sortIndex(name) > -1">{{ sortIndex(name) + 1 }}</span>
-            <span
-              v-if="sortIndex(name) > -1"
-              class="icon remove-icon"
-              @click.stop="removeSortColumns(name)"
-            >
-              <i class="fas fa-times-circle" />
-            </span>
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="result in pageSortedResults(page)"
-        :key="result.id"
-      >
-        <td
-          v-for="name in columns"
-          :key="name"
-          :class="{ 'date-text': name.toLowerCase() === 'date' }"
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="result in pageSortedResults(page)"
+          :key="result.id"
         >
-          {{ format(result[name]) }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <p
-    v-else
-    class="has-text-centered"
-  >
-    No results to display.
-  </p>
-  <search-results-pagination v-if="results.length > 0" />
+          <td
+            v-for="name in columns"
+            :key="name"
+            :class="{ 'date-text': name.toLowerCase() === 'date' }"
+          >
+            {{ format(result[name]) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p
+      v-else
+      class="has-text-centered"
+    >
+      No results to display.
+    </p>
+    <search-results-pagination v-if="results.length > 0" />
+  </div>
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import SearchResultsPagination from './SearchResultsPagination.vue'
+  import { computed, ref, watch } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { useStore } from 'vuex'
+  import SearchResultsPagination from './SearchResultsPagination.vue'
 
-const route = useRoute()
-const store = useStore()
-const results = computed(() => store.state.search.results)
-const loading = computed(() => store.state.search.loading)
-const time = computed(() => store.state.search.time)
-const perPage = computed(() => store.state.search.perPage)
-const page = computed(() => parseInt(route.query.p || '1'))
+  const route = useRoute()
+  const store = useStore()
 
-const columns = ['id', 'title', 'author', 'date', 'similarity']
-const sortColumns = ref([])
+  const columns = ['id', 'title', 'author', 'date', 'similarity']
 
-const format = data => {
-  const re =
-    /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/
-  if (re.test(data))
-    return new Intl.DateTimeFormat(
-      'en-US',
-      { dateStyle: 'medium' }
-    ).format(Date.parse(data))
-  else return data
-}
+  const sortColumns = ref([])
 
-const sortIcon = name => {
-  const found = sortColumns.value.find(elem => elem.name === name)
-  if (found === undefined) return 'fa-sort'
-  else return found.descending ? 'fa-sort-down' : 'fa-sort-up'
-}
+  const results = computed(() => store.state.search.results)
+  const loading = computed(() => store.state.search.loading)
+  const time = computed(() => store.state.search.time)
+  const perPage = computed(() => store.state.search.perPage)
+  const page = computed(() => parseInt(route.query.p || '1'))
 
-const updateSortColumns = name => {
-  const found = sortColumns.value.find(elem => elem.name === name)
-  if (found === undefined) sortColumns.value.push({ name, descending: true })
-  else found.descending = !found.descending
-}
+  const format = data => {
+    const re =
+      /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/
+    if (re.test(data))
+      return new Intl.DateTimeFormat(
+        'en-US',
+        { dateStyle: 'medium' }
+      ).format(Date.parse(data))
+    else return data
+  }
 
-const sortIndex = name => sortColumns.value.findIndex(el => el.name === name)
+  const sortIcon = name => {
+    const found = sortColumns.value.find(elem => elem.name === name)
+    if (found === undefined) return 'fa-sort'
+    else return found.descending ? 'fa-sort-down' : 'fa-sort-up'
+  }
 
-const removeSortColumns = name => {
-  sortColumns.value.splice(sortIndex(name), 1)
-}
+  const updateSortColumns = name => {
+    const found = sortColumns.value.find(elem => elem.name === name)
+    if (found === undefined) sortColumns.value.push({ name, descending: true })
+    else found.descending = !found.descending
+  }
 
-const sortedResults = computed(() => {
-  if (sortColumns.value.length === 0) return results.value
-  else return [...results.value].sort((a, b) => {
-    for (let column of sortColumns.value) {
-      if (a[column.name] < b[column.name]) return -column.descending
-      else if (a[column.name] > b[column.name]) return column.descending
-    }
-    return 0
+  const sortIndex = name => sortColumns.value.findIndex(el => el.name === name)
+
+  const removeSortColumns = name => {
+    sortColumns.value.splice(sortIndex(name), 1)
+  }
+
+  const sortedResults = computed(() => {
+    if (sortColumns.value.length === 0) return results.value
+    else return [...results.value].sort((a, b) => {
+      for (let column of sortColumns.value) {
+        if (a[column.name] < b[column.name]) return -column.descending
+        else if (a[column.name] > b[column.name]) return column.descending
+      }
+      return 0
+    })
   })
-})
 
-const pageSortedResults = currentPage => sortedResults.value.slice(
-  perPage.value * (page.value - 1),
-  perPage.value * page.value
-)
+  const pageSortedResults = currentPage => sortedResults.value.slice(
+    perPage.value * (page.value - 1),
+    perPage.value * page.value
+  )
 
-watch(
-  () => route.params,
-  () => store.dispatch('search/updateResults'),
-  { immediate: true }
-)
+  watch(
+    () => route.params,
+    () => store.dispatch('search/updateResults'),
+    { immediate: true }
+  )
 </script>
 
 <style>
-p.container {
-  font-size: 0.9rem;
-  margin-top: 0.9rem;
-  margin-bottom: 0.45rem;
-}
+  p.container {
+    font-size: 0.9rem;
+    margin-top: 0.9rem;
+    margin-bottom: 0.45rem;
+  }
 
-th:hover {
-  border-color: darkgray;
-}
+  th:hover {
+    border-color: darkgray;
+  }
 
-.fa-sort, .remove-icon {
-  color: lightgray;
-}
+  .fa-sort, .remove-icon {
+    color: lightgray;
+  }
 
-.remove-icon:hover {
-  color: gray;
-}
+  .remove-icon:hover {
+    color: gray;
+  }
 
-.icon-text {
-  display: inline;
-  white-space: nowrap;
-}
+  .icon-text {
+    display: inline;
+    white-space: nowrap;
+  }
 
-.date-text {
-  white-space: nowrap;
-}
+  .date-text {
+    white-space: nowrap;
+  }
 </style>

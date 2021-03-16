@@ -72,18 +72,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import SearchInput from './SearchInput.vue'
-import ScopeSearchButton from './ScopeSearchButton.vue'
-import SearchButton from './SearchButton.vue'
-import NavBarUserElement from './NavBarUserElement.vue'
+  import { ref } from 'vue'
+  import { useRoute } from 'vue-router'
+  import SearchInput from './SearchInput.vue'
+  import ScopeSearchButton from './ScopeSearchButton.vue'
+  import SearchButton from './SearchButton.vue'
+  import NavBarUserElement from './NavBarUserElement.vue'
 
-const route = useRoute()
-let isActive = ref(false)
+  const route = useRoute()
+  let isActive = ref(false)
+  const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
 
-const toggleMenu = () => {
-  isActive.value = !isActive.value
-}
-const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
+  const toggleMenu = () => {
+    isActive.value = !isActive.value
+  }
 </script>

@@ -12,6 +12,7 @@
   import { useStore } from 'vuex'
 
   const store = useStore()
+
   const loading = computed(() => store.state.search.loading)
   const results = computed(() => store.state.search.results)
   const time = computed(() => store.state.search.time)

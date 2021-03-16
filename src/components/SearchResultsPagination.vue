@@ -81,6 +81,7 @@
 
   const route = useRoute()
   const store = useStore()
+
   const page = computed(() => parseInt(route.query.p || '1'))
   const numPages = computed(() => store.getters['search/numPages'])
 </script>

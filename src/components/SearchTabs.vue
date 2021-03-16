@@ -22,6 +22,7 @@
   const tabs = ['Table', 'Cards', 'Plot']
   const route = useRoute()
   const store = useStore()
+
   const tab = computed(() => store.state.search.tab)
   const page = computed(() => parseInt(route.query.p || '1'))
   const tabQuery = computed(name => name !== 'plot' ? `?p=${page.value}`: '')
