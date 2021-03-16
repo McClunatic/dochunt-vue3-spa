@@ -5,17 +5,33 @@
       <search-stats class="column is-11 search-stats" />
     </div>
     <div class="columns is-centered">
-      <div class="column is-11">
-        <router-view />
+      <div class="column is-11 search-content">
+        <router-view
+          v-slot="{ Component, route }"
+        >
+          <transition
+            :enter-active-class="route.meta.enterClass"
+            :leave-active-class="route.meta.leaveClass"
+          >
+            <component
+              :is="Component"
+              :key="`${route.path}?${route.query.p}`"
+              class="search-component"
+            />
+          </transition>
+        </router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+  import { useRoute } from 'vue-router'
   import NavBar from '../components/NavBar.vue'
   import SearchStats from '../components/SearchStats.vue'
   import SearchTabs from '../components/SearchTabs.vue'
+
+  const route = useRoute()
 </script>
 
 <style>
@@ -28,5 +44,14 @@
     padding-bottom: 0.25rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  div.search-content {
+    position: relative;
+  }
+
+  .search-component {
+    position: absolute;
+    top: 0;
   }
 </style>
