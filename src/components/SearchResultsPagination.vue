@@ -90,9 +90,6 @@
 
   const switchPage = newPage => router.push({
     path: route.path,
-    query: {
-      q: route.query.q,
-      p: newPage
-    }
+    query: { ...route.query, p: newPage }
   })
 </script>

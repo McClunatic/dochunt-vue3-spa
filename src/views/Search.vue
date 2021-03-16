@@ -15,7 +15,7 @@
           >
             <component
               :is="Component"
-              :key="`${route.path}?${route.query.p}`"
+              :key="`${route.path}?p=${route.query.p}&q=${route.query.q}`"
               class="search-component"
             />
           </transition>
