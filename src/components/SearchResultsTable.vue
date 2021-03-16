@@ -121,12 +121,6 @@
     perPage.value * (page.value - 1),
     perPage.value * page.value
   )
-
-  watch(
-    () => route.params,
-    () => store.dispatch('search/updateResults'),
-    { immediate: true }
-  )
 </script>
 
 <style>

@@ -47,7 +47,15 @@ const router = createRouter({
   routes
 })
 
-router.afterEach((to, from) => {
+const updateSearchResults = (to, from) => {
+  const toQuery = to.query.q
+  const fromQuery = from.query.q
+  if (toQuery === undefined) return
+  if (fromQuery === undefined || toQuery !== fromQuery)
+    store.dispatch('search/updateResults', toQuery)
+}
+
+const animatePagination = (to, from) => {
   const toPage = to.query.p
   const fromPage = from.query.p
   if (toPage === undefined || fromPage === undefined || toPage === fromPage) {
@@ -66,6 +74,11 @@ router.afterEach((to, from) => {
     from.meta.enterClass = "animate__animated animate__fadeInLeft"
     from.meta.leaveClass = "animate__animated animate__fadeOutRight"
   }
+}
+
+router.afterEach((to, from) => {
+  updateSearchResults(to, from)
+  animatePagination(to, from)
 })
 
 if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
