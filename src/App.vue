@@ -16,8 +16,9 @@
 </script>
 
 <style lang="scss">
-  @import 'bulma/css/bulma.css';
-  @import '@fortawesome/fontawesome-free/css/all.css';
+  @import 'animate.css/animate.min.css';
+  @import 'bulma/css/bulma.min.css';
+  @import '@fortawesome/fontawesome-free/css/all.min.css';
 
   html, body, #app {
     height: 100%;
