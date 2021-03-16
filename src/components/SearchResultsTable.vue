@@ -34,7 +34,7 @@
     </thead>
     <tbody>
       <tr
-        v-for="result in sortedResults"
+        v-for="result in pageSortedResults(page)"
         :key="result.id"
       >
         <td
@@ -53,18 +53,22 @@
   >
     No results to display.
   </p>
+  <search-results-pagination v-if="results.length > 0" />
 </template>
 
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import SearchResultsPagination from './SearchResultsPagination.vue'
 
 const route = useRoute()
 const store = useStore()
 const results = computed(() => store.state.search.results)
 const loading = computed(() => store.state.search.loading)
 const time = computed(() => store.state.search.time)
+const perPage = computed(() => store.state.search.perPage)
+const page = computed(() => parseInt(route.query.p || '1'))
 
 const columns = ['id', 'title', 'author', 'date', 'similarity']
 const sortColumns = ref([])
@@ -108,6 +112,11 @@ const sortedResults = computed(() => {
     return 0
   })
 })
+
+const pageSortedResults = currentPage => sortedResults.value.slice(
+  perPage.value * (page.value - 1),
+  perPage.value * page.value
+)
 
 watch(
   () => route.params,

@@ -1,18 +1,16 @@
 <template>
-  <a
+  <router-link
     class="button is-primary"
-    @click="router.push(`/search/${tab}`)"
+    :to="`/search/${tab}?p=1`"
   >
     Scope Search
-  </a>
+  </router-link>
 </template>
 
 <script setup>
   import { computed } from 'vue'
-  import { useRouter } from 'vue-router'
   import { useStore } from 'vuex'
 
-  const router = useRouter()
   const store = useStore()
   const tab = computed(() => store.state.search.tab)
 </script>

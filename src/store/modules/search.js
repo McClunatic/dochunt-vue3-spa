@@ -5,11 +5,16 @@ const state = () => ({
   results: [],
   loading: false,
   time: 0.0,
-  tab: 'table'
+  tab: 'table',
+  perPage: 5,
 })
 
 // getters
-const getters = {}
+const getters = {
+  numPages(state) {
+    return Math.ceil(state.results.length / state.perPage)
+  }
+}
 
 // mutations
 const mutations = {
@@ -24,6 +29,9 @@ const mutations = {
   },
   updateTab(state, tab) {
     state.tab = tab
+  },
+  updatePerPage(state, perPage) {
+    state.perPage = perPage
   }
 }
 
@@ -43,7 +51,7 @@ const actions = {
       commit('updateLoading', true)
       const opts = {}
       if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
-      const response = await msalInstance.acquireTokenSilent(tokenRequest)
+        const response = await msalInstance.acquireTokenSilent(tokenRequest)
         opts['headers'] = { Authorization: `Bearer ${response.accessToken}` }
       }
       const startTime = new Date().getTime()
@@ -60,6 +68,9 @@ const actions = {
   },
   async updateTab(context, tab) {
     context.commit('updateTab', tab)
+  },
+  async updatePerPage(context, perPage) {
+    context.commit('updatePerPage', perPage)
   }
 }
 

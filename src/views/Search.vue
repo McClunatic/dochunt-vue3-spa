@@ -6,16 +6,16 @@
   </div>
   <div class="columns is-centered">
     <div class="column is-11">
-      <router-view></router-view>
+      <router-view />
     </div>
   </div>
   <footer />
 </template>
 
 <script setup>
-import NavBar from '../components/NavBar.vue'
-import SearchStats from '../components/SearchStats.vue'
-import SearchTabs from '../components/SearchTabs.vue'
+  import NavBar from '../components/NavBar.vue'
+  import SearchStats from '../components/SearchStats.vue'
+  import SearchTabs from '../components/SearchTabs.vue'
 </script>
 
 <style>
