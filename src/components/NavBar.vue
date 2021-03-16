@@ -49,14 +49,17 @@
           v-if="route.path.startsWith('/search')"
           class="navbar-item"
         >
-          <search-input />
+          <search-input
+            v-model="searchText"
+            @keyup.enter="doSearch()"
+          />
         </div>
         <div
           v-if="route.path.startsWith('/search')"
           class="navbar-item"
         >
           <div class="buttons">
-            <scope-search-button />
+            <scope-search-button @click.stop="doSearch()"/>
             <search-button />
           </div>
         </div>
@@ -72,18 +75,39 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { computed, ref, watch } from 'vue'
+  import { useRoute, useRouter } from 'vue-router'
+  import { useStore } from 'vuex'
   import SearchInput from './SearchInput.vue'
   import ScopeSearchButton from './ScopeSearchButton.vue'
   import SearchButton from './SearchButton.vue'
   import NavBarUserElement from './NavBarUserElement.vue'
 
   const route = useRoute()
-  let isActive = ref(false)
+  const router = useRouter()
+  const store = useStore()
   const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
+
+  const isActive = ref(false)
+  const searchText = ref('')
+
+  const tab = computed(() => store.state.search.tab)
 
   const toggleMenu = () => {
     isActive.value = !isActive.value
   }
+
+  const doSearch = () => router.push({
+    path: `/search/${tab.value}`,
+    query: {
+      q: searchText.value,
+      p: 1
+    }
+  })
+
+  watch(
+    () => route.query,
+    newQuery => searchText.value = route.query.q,
+    { immediate: true }
+  )
 </script>

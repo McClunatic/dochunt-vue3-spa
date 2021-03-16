@@ -4,71 +4,71 @@
     role="navigation"
     aria-label="pagination"
   >
-    <router-link
+    <a
       class="pagination-previous"
       :disabled="page == 1 ? true : null"
-      :to="`${route.path}?p=${page - 1}`"
+      @click="switchPage(page - 1)"
     >
       Previous
-    </router-link>
-    <router-link
+    </a>
+    <a
       class="pagination-next"
       :disabled="page == numPages ? true : null"
-      :to="`${route.path}?p=${page + 1}`"
+      @click="switchPage(page + 1)"
     >
       Next
-    </router-link>
+    </a>
     <ul class="pagination-list">
       <li v-if="page > 2">
-        <router-link
-          :to="`${route.path}?p=1`"
+        <a
           class="pagination-link"
           aria-label="Go to page 1"
+          @click="switchPage(1)"
         >
           1
-        </router-link>
+        </a>
       </li>
       <li v-if="page > 3">
         <a class="pagination-ellipsis">&hellip;</a>
       </li>
       <li v-if="page > 1">
-        <router-link
-          :to="`${route.path}?p=${page - 1}`"
+        <a
           class="pagination-link"
           :aria-label="`Go to page ${page - 1}`"
+          @click="switchPage(page - 1)"
         >
           {{ page - 1 }}
-        </router-link>
+        </a>
       </li>
       <li>
-        <router-link
-          :to="`${route.path}?p=${page}`"
+        <a
           class="pagination-link is-current"
           :aria-label="`Go to page ${page}`"
+          @click="switchPage(page)"
         >
           {{ page }}
-        </router-link>
+        </a>
       </li>
       <li v-if="numPages - page > 0">
-        <router-link
-          :to="`${route.path}?p=${page + 1}`"
+        <a
           class="pagination-link"
           :aria-label="`Go to page ${page + 1}`"
+          @click="switchPage(page + 1)"
         >
           {{ page + 1 }}
-        </router-link>
+        </a>
       </li>
       <li v-if="numPages - page > 2">
         <a class="pagination-ellipsis">&hellip;</a>
       </li>
       <li v-if="numPages - page > 1">
-        <router-link
-          :to="`${route.path}?p=${numPages}`"
+        <a
           class="pagination-link"
           :aria-label="`Go to page ${numPages}`"
+          @click="switchPage(numPages)"
         >
           {{ numPages }}
-        </router-link>
+        </a>
       </li>
     </ul>
   </nav>
@@ -76,12 +76,21 @@
 
 <script setup>
   import { computed } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { useStore } from 'vuex'
 
   const route = useRoute()
+  const router = useRouter()
   const store = useStore()
 
   const page = computed(() => parseInt(route.query.p || '1'))
   const numPages = computed(() => store.getters['search/numPages'])
+
+  const switchPage = newPage => router.push({
+    path: route.path,
+    query: {
+      q: route.query.q,
+      p: newPage
+    }
+  })
 </script>

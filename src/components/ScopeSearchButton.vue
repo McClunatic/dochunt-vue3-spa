@@ -1,10 +1,7 @@
 <template>
-  <router-link
-    class="button is-primary"
-    :to="`/search/${tab}?p=1`"
-  >
+  <a class="button is-primary">
     Scope Search
-  </router-link>
+  </a>
 </template>
 
 <script setup>

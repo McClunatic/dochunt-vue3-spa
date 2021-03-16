@@ -6,9 +6,9 @@
         :key="tabName"
         :class="{ 'is-active': tab === tabName.toLowerCase() }"
       >
-        <router-link :to="`/search/${tabName.toLowerCase()}${tabQuery}`">
+        <a @click="switchTab(tabName)">
           {{ tabName }}
-        </router-link>
+        </a>
       </li>
     </ul>
   </div>
@@ -16,14 +16,18 @@
 
 <script setup>
   import { computed, watch } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { useStore } from 'vuex'
 
   const tabs = ['Table', 'Cards', 'Plot']
   const route = useRoute()
+  const router = useRouter()
   const store = useStore()
 
   const tab = computed(() => store.state.search.tab)
-  const page = computed(() => parseInt(route.query.p || '1'))
-  const tabQuery = computed(name => name !== 'plot' ? `?p=${page.value}`: '')
+
+  const switchTab = name => router.push({
+    path: `/search/${name.toLowerCase()}`,
+    query: route.query
+  })
 </script>
