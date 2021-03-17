@@ -49,7 +49,7 @@
                 target="_blank"
               >
                 {{ format(result[name]) }}
-                <span class="icon is-small">
+                <span class="icon is-small has-text-grey">
                   <i class="fas fa-external-link-alt" />
                 </span>
               </a>
@@ -190,5 +190,9 @@
 
   .date-text {
     white-space: nowrap;
+  }
+
+  .is-small.has-text-grey {
+    font-size: 0.75rem;
   }
 </style>

@@ -13,7 +13,7 @@
             target="_blank"
           >
             {{ strip(result.title) }}
-            <span class="icon is-small">
+            <span class="icon is-small has-text-grey">
               <i class="fas fa-external-link-alt" />
             </span>
           </a>
@@ -74,39 +74,43 @@
 </script>
 
 <style>
-.card {
-  padding: 0.25rem 0.75rem;
-  margin-bottom: 0.5rem;
-}
+  .card {
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 0.5rem;
+  }
 
-.card:first-child {
-  margin-top: 0.5rem;
-}
+  .card:first-child {
+    margin-top: 0.5rem;
+  }
 
-.card-content > div, .card-header > p {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
+  .card-content > div, .card-header > p {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 
-.card-content {
-  padding: 0.5rem 1rem;
-  padding-top: 0.75rem;
-  font-size: 0.9rem;
-}
+  .card-content {
+    padding: 0.5rem 1rem;
+    padding-top: 0.75rem;
+    font-size: 0.9rem;
+  }
 
-.card-header > p.card-header-title {
-  margin-bottom: 0;
-}
+  .card-header > p.card-header-title {
+    margin-bottom: 0;
+  }
 
-.tag {
-  margin: 1px;
-}
+  .tag {
+    margin: 1px;
+  }
 
-.groups {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
+  .groups {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .is-small.has-text-grey {
+    font-size: 0.75rem;
+  }
 </style>
 
