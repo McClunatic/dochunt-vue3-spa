@@ -6,7 +6,7 @@
     >
       {{ statsMessage }}
     </div>
-    <search-options-per-page-dropdown />
+    <search-options-per-page-dropdown v-if="tab !== 'plot'" />
   </div>
 </template>
 
@@ -20,6 +20,7 @@
   const loading = computed(() => store.state.search.loading)
   const results = computed(() => store.state.search.results)
   const time = computed(() => store.state.search.time)
+  const tab = computed(() => store.state.search.tab)
 
   const statsMessage = computed(() => (
     loading.value
