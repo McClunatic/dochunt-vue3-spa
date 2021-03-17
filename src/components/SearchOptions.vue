@@ -1,15 +1,19 @@
 <template>
-  <div
-    class="has-text-justified"
-    :class="{ loading: loading }"
-  >
-    {{ statsMessage }}
+  <div class="is-flex is-flex-direction-row is-align-items-center">
+    <div
+      class="font-small"
+      :class="{ loading: loading }"
+    >
+      {{ statsMessage }}
+    </div>
+    <search-options-per-page-dropdown />
   </div>
 </template>
 
 <script setup>
   import { computed } from 'vue'
   import { useStore } from 'vuex'
+  import SearchOptionsPerPageDropdown from './SearchOptionsPerPageDropdown.vue'
 
   const store = useStore()
 
@@ -25,7 +29,7 @@
 </script>
 
 <style>
-  .has-text-justified {
+  .font-small {
     font-size: 0.9rem;
   }
 
