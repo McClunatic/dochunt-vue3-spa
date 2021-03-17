@@ -2,7 +2,7 @@
   <div>
     <div class="columns is-centered is-multiline is-flex is-flex-direction-row">
       <search-tabs class="column is-11 search-tabs" />
-      <search-stats class="column is-11 search-stats" />
+      <search-options class="column is-11 search-options" />
     </div>
     <div class="columns is-centered">
       <div class="column is-11 search-content">
@@ -28,7 +28,7 @@
 
 <script setup>
   import { useRoute } from 'vue-router'
-  import SearchStats from '../components/SearchStats.vue'
+  import SearchOptions from '../components/SearchOptions.vue'
   import SearchTabs from '../components/SearchTabs.vue'
   import SearchPagination from '../components/SearchPagination.vue'
 
@@ -40,7 +40,7 @@
     margin-bottom: 0;
   }
 
-  div.column.search-stats {
+  div.column.search-options {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     padding-left: 1.5rem;
