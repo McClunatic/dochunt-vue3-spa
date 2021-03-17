@@ -48,9 +48,11 @@ const mutations = {
     state.perPage = perPage
   },
   updateColumns(state, columns) {
-    state.columns = columns.sort((a, b) => (
-      state.allColumns.findIndex(a) < state.allColumns.findIndex(b)
+    columns.sort((a, b) => (
+      state.allColumns.findIndex(e => e === a) <
+      state.allColumns.findIndex(e => e === b) ? -1 : 1
     ))
+    state.columns = columns
   },
 }
 

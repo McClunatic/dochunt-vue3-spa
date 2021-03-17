@@ -7,6 +7,7 @@
       {{ statsMessage }}
     </div>
     <search-options-per-page-dropdown v-if="tab !== 'plot'" />
+    <search-options-columns-checkboxes v-if="tab === 'table'" />
   </div>
 </template>
 
@@ -14,6 +15,7 @@
   import { computed } from 'vue'
   import { useStore } from 'vuex'
   import SearchOptionsPerPageDropdown from './SearchOptionsPerPageDropdown.vue'
+  import SearchOptionsColumnsCheckboxes from './SearchOptionsColumnsCheckboxes.vue'
 
   const store = useStore()
 
