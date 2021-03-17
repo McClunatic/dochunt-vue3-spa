@@ -7,6 +7,20 @@ const state = () => ({
   time: 0.0,
   tab: 'table',
   perPage: 5,
+  columns: ['title', 'author', 'date', 'similarity'],
+  allColumns: [
+    'id',
+    'href',
+    'title',
+    'description',
+    'image',
+    'tags',
+    'groups',
+    'author',
+    'date',
+    'content',
+    'similarity',
+  ]
 })
 
 // getters
@@ -32,7 +46,12 @@ const mutations = {
   },
   updatePerPage(state, perPage) {
     state.perPage = perPage
-  }
+  },
+  updateColumns(state, columns) {
+    state.columns = columns.sort((a, b) => (
+      state.allColumns.findIndex(a) < state.allColumns.findIndex(b)
+    ))
+  },
 }
 
 // actions
@@ -71,6 +90,9 @@ const actions = {
   },
   async updatePerPage(context, perPage) {
     context.commit('updatePerPage', perPage)
+  },
+  async updateColumns(context, columns) {
+    context.commit('updateColumns', columns)
   }
 }
 

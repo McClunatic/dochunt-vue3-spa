@@ -77,14 +77,13 @@
   const router = useRouter()
   const store = useStore()
 
-  const columns = ['title', 'author', 'date', 'similarity']
-
   const sortColumns = ref([])
 
   const results = computed(() => store.state.search.results)
   const loading = computed(() => store.state.search.loading)
-  const time = computed(() => store.state.search.time)
   const perPage = computed(() => store.state.search.perPage)
+  const columns = computed(() => store.state.search.columns)
+
   const page = computed(() => parseInt(route.query.p || '1'))
 
   const format = data => {
