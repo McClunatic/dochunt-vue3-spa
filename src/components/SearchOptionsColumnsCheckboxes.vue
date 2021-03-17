@@ -1,5 +1,5 @@
 <template>
-  <div class="field is-grouped is-align-items-center">
+  <div class="field is-grouped is-align-items-center is-flex-wrap-wrap">
     <div
       v-for="column in allColumns"
       :key="column"
