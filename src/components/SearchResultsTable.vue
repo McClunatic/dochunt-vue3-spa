@@ -43,7 +43,18 @@
             :key="name"
             :class="{ 'date-text': name.toLowerCase() === 'date' }"
           >
-            {{ format(result[name]) }}
+            <span v-if="name === 'title'">
+              <a
+                :href="result.href"
+                target="_blank"
+              >
+                {{ format(result[name]) }}
+                <span class="icon is-small">
+                  <i class="fas fa-external-link-alt" />
+                </span>
+              </a>
+            </span>
+            <span v-else>{{ format(result[name]) }}</span>
           </td>
         </tr>
       </tbody>
@@ -66,7 +77,7 @@
   const router = useRouter()
   const store = useStore()
 
-  const columns = ['id', 'title', 'author', 'date', 'similarity']
+  const columns = ['title', 'author', 'date', 'similarity']
 
   const sortColumns = ref([])
 

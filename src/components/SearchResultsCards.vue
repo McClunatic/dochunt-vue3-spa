@@ -8,7 +8,15 @@
       <div class="card-header">
         <p class="card-header-title">
           <span class="has-text-grey">{{ result.author }}:&nbsp;</span>
-          {{ strip(result.title) }}
+          <a
+            :href="result.href"
+            target="_blank"
+          >
+            {{ strip(result.title) }}
+            <span class="icon is-small">
+              <i class="fas fa-external-link-alt" />
+            </span>
+          </a>
         </p>
         <p class="card-header-icon">
           <span>{{ result.similarity }}</span>
