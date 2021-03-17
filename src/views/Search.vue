@@ -20,7 +20,7 @@
             />
           </transition>
         </router-view>
-        <search-results-pagination />
+        <search-pagination />
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@
   import NavBar from '../components/NavBar.vue'
   import SearchStats from '../components/SearchStats.vue'
   import SearchTabs from '../components/SearchTabs.vue'
-  import SearchResultsPagination from '../components/SearchResultsPagination.vue'
+  import SearchPagination from '../components/SearchPagination.vue'
 
   const route = useRoute()
 </script>
