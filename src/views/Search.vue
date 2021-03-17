@@ -28,7 +28,6 @@
 
 <script setup>
   import { useRoute } from 'vue-router'
-  import NavBar from '../components/NavBar.vue'
   import SearchStats from '../components/SearchStats.vue'
   import SearchTabs from '../components/SearchTabs.vue'
   import SearchPagination from '../components/SearchPagination.vue'
