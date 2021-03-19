@@ -59,20 +59,13 @@ const animatePagination = (to, from) => {
   const toPage = to.query.p
   const fromPage = from.query.p
   if (toPage === undefined || fromPage === undefined || toPage === fromPage) {
-    to.meta.enterClass = "animate__animated animate__fadeIn"
-    to.meta.leaveClass = "animate__animated animate__fadeOut leaving"
-    from.meta.enterClass = "animate__animated animate__fadeIn"
-    from.meta.leaveClass = "animate__animated animate__fadeOut leaving"
+    to.meta.enterClass = "animate__animated animate__fadeIn animate__faster"
   } else if (toPage < fromPage) {
     to.meta.enterClass = "animate__animated animate__fadeInLeft"
     to.meta.leaveClass = "animate__animated animate__fadeOutRight leaving"
-    from.meta.enterClass = "animate__animated animate__fadeInRight"
-    from.meta.leaveClass = "animate__animated animate__fadeOutLeft leaving"
   } else {
     to.meta.enterClass = "animate__animated animate__fadeInRight"
     to.meta.leaveClass = "animate__animated animate__fadeOutLeft leaving"
-    from.meta.enterClass = "animate__animated animate__fadeInLeft"
-    from.meta.leaveClass = "animate__animated animate__fadeOutRight leaving"
   }
 }
 
