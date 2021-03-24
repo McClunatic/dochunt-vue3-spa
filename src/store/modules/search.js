@@ -70,7 +70,7 @@ const actions = {
     let results = []
     try {
       commit('updateLoading', true)
-      const opts = { q: query }
+      const opts = { params: { q: query } }
       if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
         const response = await msalInstance.acquireTokenSilent(tokenRequest)
         opts['headers'] = { Authorization: `Bearer ${response.accessToken}` }
