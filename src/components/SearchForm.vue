@@ -2,19 +2,22 @@
   <div>
     <search-input
       v-model="searchText"
-      @keyup.enter="doSearch()"
+      @keyup.enter="doSearch('lda')"
     />
     <div class="field is-grouped centered">
       <div class="control">
         <a
           class="button is-primary"
-          @click.stop="doSearch()"
+          @click.stop="doSearch('lda')"
         >
           Scope Search
         </a>
       </div>
       <div class="control">
-        <a class="button">
+        <a
+          class="button"
+          @click.stop="doSearch('sql')"
+        >
           Search
         </a>
       </div>
@@ -35,11 +38,12 @@
 
   const tab = computed(() => store.state.search.tab)
 
-  const doSearch = () => router.push({
+  const doSearch = mode => router.push({
     path: `/search/${tab.value}`,
     query: {
       q: searchText.value,
-      p: 1
+      p: 1,
+      m: mode
     }
   })
 </script>

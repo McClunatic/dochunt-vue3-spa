@@ -58,7 +58,7 @@ const mutations = {
 
 // actions
 const actions = {
-  async updateResults({ commit, rootState, rootGetters }, query) {
+  async updateResults({ commit, rootState, rootGetters }, { q, m }) {
     const endpoint = import.meta.env.PROD
       ? 'https://paper-scope-6-api.azurewebsites.net'
       : 'http://127.0.0.1:21383'
@@ -70,13 +70,13 @@ const actions = {
     let results = []
     try {
       commit('updateLoading', true)
-      const opts = { params: { q: query } }
+      const opts = { params: { q } }
       if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
         const response = await msalInstance.acquireTokenSilent(tokenRequest)
         opts['headers'] = { Authorization: `Bearer ${response.accessToken}` }
       }
       const startTime = new Date().getTime()
-      const apiResponse = await axios.get(`${endpoint}/search/`, opts)
+      const apiResponse = await axios.get(`${endpoint}/search/${m}`, opts)
       commit('updateTime', new Date().getTime() - startTime)
       results = apiResponse.data
     } catch (error) {

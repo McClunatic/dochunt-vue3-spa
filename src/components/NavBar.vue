@@ -46,26 +46,29 @@
           Docs
         </a>
         <div
-          v-if="route.path.startsWith('/search')"
+          v-if="isSearch"
           class="navbar-item"
         >
           <search-input
             v-model="searchText"
-            @keyup.enter="doSearch()"
+            @keyup.enter="doSearch('lda')"
           />
         </div>
         <div
-          v-if="route.path.startsWith('/search')"
+          v-if="isSearch"
           class="navbar-item"
         >
           <div class="buttons">
             <a
               class="button is-primary"
-              @click.stop="doSearch()"
+              @click.stop="doSearch('lda')"
             >
               Scope Search
             </a>
-            <a class="button">
+            <a
+              class="button"
+              @click.stop="doSearch('sql')"
+            >
               Search
             </a>
           </div>
@@ -97,16 +100,18 @@
   const searchText = ref('')
 
   const tab = computed(() => store.state.search.tab)
+  const isSearch = computed(() => route.path.startsWith('/search'))
 
   const toggleMenu = () => {
     isActive.value = !isActive.value
   }
 
-  const doSearch = () => router.push({
+  const doSearch = mode => router.push({
     path: `/search/${tab.value}`,
     query: {
       q: searchText.value,
-      p: 1
+      p: 1,
+      m: mode
     }
   })
 

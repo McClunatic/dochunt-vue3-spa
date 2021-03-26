@@ -26,7 +26,7 @@
 
   const statsMessage = computed(() => (
     loading.value
-      ? 'Loading'
+      ? 'Searching'
       : `${results.value.length} results found (${time.value} ms)`
   ))
 </script>
@@ -44,19 +44,23 @@
     vertical-align: bottom;
     -webkit-animation: ellipsis steps(4,end) 900ms infinite;
     animation: ellipsis steps(4,end) 900ms infinite;
-    content: "\2026"; /* ascii code for the ellipsis character */
-    width: 0px;
+    content: "";
+    width: 20px;
   }
 
   @keyframes ellipsis {
-    to {
-      width: 20px;
-    }
+    0% {content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+    100% { content: ''; }
   }
 
   @-webkit-keyframes ellipsis {
-    to {
-      width: 20px;
-    }
+    0% {content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+    100% { content: ''; }
   }
 </style>
