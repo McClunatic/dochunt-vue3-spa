@@ -67,7 +67,7 @@
             </a>
             <a
               class="button"
-              @click.stop="doSearch('sql')"
+              @click.stop="doSearch('elk')"
             >
               Search
             </a>
