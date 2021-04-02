@@ -3,6 +3,7 @@ import axios from 'axios'
 // initial state
 const state = () => ({
   results: [],
+  datasets: [],
   loading: false,
   time: 0.0,
   tab: 'table',
@@ -34,6 +35,9 @@ const getters = {
 const mutations = {
   updateResults(state, results) {
     state.results = results
+  },
+  updateDatasets(state, datasets) {
+    state.datasets = datasets
   },
   updateLoading(state, loading) {
     state.loading = loading
@@ -68,6 +72,7 @@ const actions = {
       scopes: rootState.msal.scopes
     }
     let results = []
+    let datasets = []
     try {
       commit('updateLoading', true)
       const opts = { params: { q } }
@@ -78,13 +83,15 @@ const actions = {
       const startTime = new Date().getTime()
       const apiResponse = await axios.get(`${endpoint}/search/${m}`, opts)
       commit('updateTime', new Date().getTime() - startTime)
-      results = apiResponse.data
+      results = apiResponse.data.results
+      if ('datasets' in apiResponse.data) datasets = apiResponse.data.datasets
     } catch (error) {
       commit('updateTime', 0)
       console.log(error.message)
       console.log(error.response)
     }
     commit('updateResults', results)
+    commit('updateDatasets', datasets)
     commit('updateLoading', false)
   },
   async updateTab(context, tab) {
