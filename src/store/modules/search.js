@@ -28,6 +28,26 @@ const state = () => ({
 const getters = {
   numPages(state) {
     return Math.ceil(state.results.length / state.perPage)
+  },
+  chartData(state) {
+    if (state.datasets === null) return []
+    const colors = [
+      'rgba(31, 119, 180, 0.5)',
+      'rgba(255, 127, 14, 0.5)',
+      'rgba(44, 160, 44, 0.5)',
+      'rgba(214, 39, 40, 0.5)',
+      'rgba(148, 103, 189, 0.5)',
+      'rgba(140, 86, 75, 0.5)',
+      'rgba(227, 119, 194, 0.5)',
+      'rgba(127, 127, 127, 0.5)',
+      'rgba(188, 189, 34, 0.5)',
+      'rgba(23, 190, 207, 0.5)'
+    ]
+    return {datasets: state.datasets.map((dataset, index) => ({
+      data: dataset,
+      label: `Topic ${index + 1}`,
+      backgroundColor: colors[index % colors.length]
+    }))}
   }
 }
 
