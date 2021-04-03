@@ -19,6 +19,11 @@
 
   let chart = ref(null)
 
+  watch(chartData, newData => {
+    chart.value.data = newData
+    chart.value.update()
+  })
+
   onMounted(() => {
     chart.value = new Chart(canvas.value, {
       type: 'scatter',
