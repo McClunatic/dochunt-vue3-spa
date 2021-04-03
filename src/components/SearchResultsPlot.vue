@@ -33,6 +33,22 @@
           display: true,
           text: 't-SNE Clustering of Article Topics'
         },
+        elements: {
+          point: {
+            radius: ctx => ctx.dataIndex === 0 ? 6 : 3,
+            display: true
+          }
+        },
+        onClick: (event) => {
+          const nearest = chart.value.getElementsAtEventForMode(
+            event,
+            'nearest',
+            {axis: 'xy', intersect: true}
+          )
+          if (nearest.length === 0) return
+          console.log(nearest[0]._index)
+          console.log(chartData.value.datasets[0].data[nearest[0]._index])
+        }
       }
     })
   })
