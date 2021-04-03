@@ -11,10 +11,10 @@
   import { useStore } from 'vuex'
   import Chart from 'chart.js'
 
-  const container = ref(null)
   const canvas = ref(null)
   const store = useStore()
 
+  const results = computed(() => store.state.search.results)
   const chartData = computed(() => store.getters['search/chartData'])
 
   let chart = ref(null)
@@ -25,6 +25,10 @@
   })
 
   onMounted(() => {
+    // TODO: find out why tooltip options aren't working
+    const label = item => results.value[item.index].title
+    Chart.defaults.scatter.tooltips.callbacks.label = label
+
     chart.value = new Chart(canvas.value, {
       type: 'scatter',
       data: chartData.value,
@@ -45,9 +49,8 @@
             'nearest',
             {axis: 'xy', intersect: true}
           )
-          if (nearest.length === 0) return
-          console.log(nearest[0]._index)
-          console.log(chartData.value.datasets[0].data[nearest[0]._index])
+          if (nearest.length === 0 || results.value.length === 0) return
+          window.open(results.value[nearest[0]._index].href, '_blank').focus()
         }
       }
     })
