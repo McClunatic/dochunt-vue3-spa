@@ -9,7 +9,7 @@
 <script setup>
   import { computed, onMounted, ref, watch } from 'vue'
   import { useStore } from 'vuex'
-  import Chart from 'chart.js'
+  import { Chart } from 'chart.js'
 
   const canvas = ref(null)
   const store = useStore()
