@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "jest"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.10.0",
@@ -24,7 +24,6 @@
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/test-utils": "^2.0.0-rc.4",
     "babel-plugin-transform-import-meta": "^1.0.1",
-    "cross-env": "^7.0.3",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.5.0",
@@ -43,6 +42,7 @@
     ],
     "transform": {
       "^.+\\.vue$": "vue-jest",
+      "^.+\\.js$": "babel-jest",
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
     }
   }
