@@ -1,17 +1,17 @@
-module.exports = {
-  env: {
-    browser: true,
-    es6: true,
-    node: true
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
   },
-  extends: [
+  "extends": [
     // add more generic rulesets here, such as:
     // 'eslint:recommended',
-    'plugin:vue/vue3-recommended',
-    'prettier'
+    "plugin:vue/vue3-recommended",
+    "prettier"
     // 'plugin:vue/recommended' // Use this if you are using Vue.js 2.x.
   ],
-  rules: {
+  "rules": {
     // override/add rules settings here, such as:
     // 'vue/no-unused-vars': 'error'
   }
