@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
     "@azure/msal-browser": "^2.10.0",
@@ -18,13 +19,30 @@
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.13.12",
     "@vitejs/plugin-vue": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.5",
+    "@vue/test-utils": "^2.0.0-rc.4",
+    "babel-plugin-transform-import-meta": "^1.0.1",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.5.0",
+    "jest-transform-stub": "^2.0.0",
     "prettier": "^2.2.1",
     "sass": "^1.32.8",
-    "vite": "^2.0.0-beta.48"
+    "ts-jest": "^26.5.4",
+    "vite": "^2.0.0-beta.48",
+    "vue-jest": "^5.0.0-alpha.7"
+  },
+  "type": "module",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.vue$": "vue-jest",
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+    }
   }
 }
