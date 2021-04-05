@@ -27,8 +27,14 @@ describe('App.test.js', () => {
   })
   test('renders a nav bar', async () => {
     const wrapper = mount(App, {
-      global: { plugins: [store, router] },
-      shallow: true
+      global: {
+        plugins: [store, router],
+        stubs: {
+          NavBar: {
+            template: '<nav />'
+          }
+        }
+       },
     })
 
     console.log(wrapper.html())
