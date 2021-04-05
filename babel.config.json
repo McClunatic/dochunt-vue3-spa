@@ -9,5 +9,5 @@
       }
     ]
   ],
-  "plugins": ["babel-plugin-transform-import-meta"]
+  "plugins": ["./babel.import-meta-plugin"]
 }

@@ -23,7 +23,6 @@
     "@vitejs/plugin-vue": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/test-utils": "^2.0.0-rc.4",
-    "babel-plugin-transform-import-meta": "^1.0.1",
     "eslint": "^7.19.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.5.0",
