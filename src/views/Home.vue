@@ -9,10 +9,13 @@
   </div>
 </template>
 
-<script setup>
-  import Logo from '../components/Logo.vue'
-  import NavBar from '../components/NavBar.vue'
-  import SearchForm from '../components/SearchForm.vue'
+<script>
+import Logo from '../components/Logo.vue'
+import SearchForm from '../components/SearchForm.vue'
+
+export default {
+  components: { Logo, SearchForm }
+}
 </script>
 
 <style>

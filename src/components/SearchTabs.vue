@@ -17,27 +17,38 @@
   </div>
 </template>
 
-<script setup>
-  import { computed, watch } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
+<script>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
-  const tabs = ['Table', 'Cards', 'Plot']
-  const tabClass = {
-    Table: 'fas fa-table',
-    Cards: 'fas fa-address-card',
-    Plot: 'fas fa-chart-bar',
+export default {
+  setup() {
+    const tabs = ['Table', 'Cards', 'Plot']
+    const tabClass = {
+      Table: 'fas fa-table',
+      Cards: 'fas fa-address-card',
+      Plot: 'fas fa-chart-bar',
+    }
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
+
+    const tab = computed(() => store.state.search.tab)
+
+    const switchTab = name => router.push({
+      path: `/search/${name.toLowerCase()}`,
+      query: route.query
+    })
+
+    return {
+      tabs,
+      tabClass,
+      tab,
+      switchTab
+    }
   }
-  const route = useRoute()
-  const router = useRouter()
-  const store = useStore()
-
-  const tab = computed(() => store.state.search.tab)
-
-  const switchTab = name => router.push({
-    path: `/search/${name.toLowerCase()}`,
-    query: route.query
-  })
+}
 </script>
 
 <style>

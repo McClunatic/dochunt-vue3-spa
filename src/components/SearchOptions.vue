@@ -11,24 +11,38 @@
   </div>
 </template>
 
-<script setup>
-  import { computed } from 'vue'
-  import { useStore } from 'vuex'
-  import SearchOptionsPerPageDropdown from './SearchOptionsPerPageDropdown.vue'
-  import SearchOptionsColumnsCheckboxes from './SearchOptionsColumnsCheckboxes.vue'
+<script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import SearchOptionsPerPageDropdown from './SearchOptionsPerPageDropdown.vue'
+import SearchOptionsColumnsCheckboxes from './SearchOptionsColumnsCheckboxes.vue'
 
-  const store = useStore()
+export default {
+  components: { SearchOptionsPerPageDropdown, SearchOptionsColumnsCheckboxes },
+  setup() {
+    const store = useStore()
 
-  const loading = computed(() => store.state.search.loading)
-  const results = computed(() => store.state.search.results)
-  const time = computed(() => store.state.search.time)
-  const tab = computed(() => store.state.search.tab)
+    const loading = computed(() => store.state.search.loading)
+    const results = computed(() => store.state.search.results)
+    const time = computed(() => store.state.search.time)
+    const tab = computed(() => store.state.search.tab)
 
-  const statsMessage = computed(() => (
-    loading.value
-      ? 'Searching'
-      : `${results.value.length} results found (${time.value} ms)`
-  ))
+    const statsMessage = computed(() => (
+      loading.value
+        ? 'Searching'
+        : `${results.value.length} results found (${time.value} ms)`
+    ))
+
+    return {
+      store,
+      loading,
+      results,
+      time,
+      tab,
+      statsMessage
+    }
+  }
+}
 </script>
 
 <style>

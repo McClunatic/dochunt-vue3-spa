@@ -39,15 +39,26 @@
   </div>
 </template>
 
-<script setup>
-  import { computed, ref } from 'vue'
-  import { useStore } from 'vuex'
+<script>
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 
-  const store = useStore()
-  const isActive = ref(false)
-  const perPageOptions = [3, 5, 10, 20, 50]
+export default {
+  setup() {
+    const store = useStore()
+    const isActive = ref(false)
+    const perPageOptions = [3, 5, 10, 20, 50]
 
-  const perPage = computed(() => store.state.search.perPage)
+    const perPage = computed(() => store.state.search.perPage)
+
+    return {
+      store,
+      isActive,
+      perPageOptions,
+      perPage
+    }
+  }
+}
 </script>
 
 <style>

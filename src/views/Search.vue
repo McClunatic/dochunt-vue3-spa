@@ -26,13 +26,19 @@
   </div>
 </template>
 
-<script setup>
-  import { useRoute } from 'vue-router'
-  import SearchOptions from '../components/SearchOptions.vue'
-  import SearchTabs from '../components/SearchTabs.vue'
-  import SearchPagination from '../components/SearchPagination.vue'
+<script>
+import { useRoute } from 'vue-router'
+import SearchOptions from '../components/SearchOptions.vue'
+import SearchTabs from '../components/SearchTabs.vue'
+import SearchPagination from '../components/SearchPagination.vue'
 
-  const route = useRoute()
+export default {
+  components: { SearchOptions, SearchTabs, SearchPagination },
+  setup() {
+    const route = useRoute()
+    return { route }
+  }
+}
 </script>
 
 <style>

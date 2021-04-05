@@ -84,40 +84,58 @@
   </nav>
 </template>
 
-<script setup>
-  import { computed, ref, watch } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
-  import SearchInput from './SearchInput.vue'
-  import NavBarUserElement from './NavBarUserElement.vue'
+<script>
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import SearchInput from './SearchInput.vue'
+import NavBarUserElement from './NavBarUserElement.vue'
 
-  const route = useRoute()
-  const router = useRouter()
-  const store = useStore()
-  const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
+export default {
+  components: { SearchInput, NavBarUserElement },
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
+    const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
 
-  const isActive = ref(false)
-  const searchText = ref('')
+    const isActive = ref(false)
+    const searchText = ref('')
 
-  const tab = computed(() => store.state.search.tab)
-  const isSearch = computed(() => route.path.startsWith('/search'))
+    const tab = computed(() => store.state.search.tab)
+    const isSearch = computed(() => route.path.startsWith('/search'))
 
-  const toggleMenu = () => {
-    isActive.value = !isActive.value
-  }
-
-  const doSearch = mode => router.push({
-    path: `/search/${tab.value}`,
-    query: {
-      q: searchText.value,
-      p: 1,
-      m: mode
+    const toggleMenu = () => {
+      isActive.value = !isActive.value
     }
-  })
 
-  watch(
-    () => route.query,
-    newQuery => searchText.value = route.query.q,
-    { immediate: true }
-  )
+    const doSearch = mode => router.push({
+      path: `/search/${tab.value}`,
+      query: {
+        q: searchText.value,
+        p: 1,
+        m: mode
+      }
+    })
+
+    watch(
+      () => route.query,
+      () => searchText.value = route.query.q,
+      { immediate: true }
+    )
+
+    return {
+      route,
+      router,
+      store,
+      authEnabled,
+      isActive,
+      searchText,
+      tab,
+      isSearch,
+      toggleMenu,
+      doSearch
+    }
+  }
+}
 </script>

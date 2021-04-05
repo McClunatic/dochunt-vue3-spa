@@ -6,13 +6,17 @@
   </div>
 </template>
 
-<script setup>
-  import { useStore } from 'vuex'
-  import NavBar from './components/NavBar.vue'
+<script>
+import { useStore } from 'vuex'
+import NavBar from './components/NavBar.vue'
 
-  const store = useStore()
-
-  store.dispatch('msal/createInstance')
+export default {
+  components: { NavBar },
+  setup() {
+    const store = useStore()
+    store.dispatch('msal/createInstance')
+  }
+}
 </script>
 
 <style lang="scss">

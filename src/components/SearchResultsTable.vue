@@ -68,99 +68,116 @@
   </div>
 </template>
 
-<script setup>
-  import { computed, ref, watch } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
+<script>
+import { computed, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
-  const route = useRoute()
-  const router = useRouter()
-  const store = useStore()
+export default {
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
 
-  const sortColumns = ref([])
+    const sortColumns = ref([])
 
-  const results = computed(() => store.state.search.results)
-  const loading = computed(() => store.state.search.loading)
-  const perPage = computed(() => store.state.search.perPage)
-  const columns = computed(() => store.state.search.columns)
+    const results = computed(() => store.state.search.results)
+    const loading = computed(() => store.state.search.loading)
+    const perPage = computed(() => store.state.search.perPage)
+    const columns = computed(() => store.state.search.columns)
 
-  const page = computed(() => parseInt(route.query.p || '1'))
+    const page = computed(() => parseInt(route.query.p || '1'))
 
-  const format = data => {
-    const re =
-      /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)?/
-    if (re.test(data))
-      return new Intl.DateTimeFormat(
-        'en-US',
-        { dateStyle: 'medium' }
-      ).format(Date.parse(data))
-    else return data
-  }
+    const format = data => {
+      const re =
+        /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)?/
+      if (re.test(data))
+        return new Intl.DateTimeFormat(
+          'en-US',
+          { dateStyle: 'medium' }
+        ).format(Date.parse(data))
+      else return data
+    }
 
-  const sortIcon = name => {
-    const found = sortColumns.value.find(elem => elem.name === name)
-    if (found === undefined) return 'fa-sort'
-    else return found.asc ? 'fa-sort-up' : 'fa-sort-down'
-  }
+    const sortIcon = name => {
+      const found = sortColumns.value.find(elem => elem.name === name)
+      if (found === undefined) return 'fa-sort'
+      else return found.asc ? 'fa-sort-up' : 'fa-sort-down'
+    }
 
-  const sortIndex = name => sortColumns.value.findIndex(el => el.name === name)
+    const sortIndex = name => sortColumns.value.findIndex(el => el.name === name)
 
-  const updateSortColumns = name => {
-    const found = sortColumns.value.find(elem => elem.name === name)
-    if (found === undefined) sortColumns.value.push({ name })
-    else found.asc = !found.asc
-    router.push({
-      path: route.path,
-      query: {
-        ...route.query,
-        s: sortColumns.value.map(elem => elem.name),
-        a: sortColumns.value.filter(elem => elem.asc).map(elem => elem.name)
-      }
+    const updateSortColumns = name => {
+      const found = sortColumns.value.find(elem => elem.name === name)
+      if (found === undefined) sortColumns.value.push({ name })
+      else found.asc = !found.asc
+      router.push({
+        path: route.path,
+        query: {
+          ...route.query,
+          s: sortColumns.value.map(elem => elem.name),
+          a: sortColumns.value.filter(elem => elem.asc).map(elem => elem.name)
+        }
+      })
+    }
+
+    const removeSortColumns = name => {
+      sortColumns.value.splice(sortIndex(name), 1)
+      router.push({
+        path: route.path,
+        query: {
+          ...route.query,
+          s: sortColumns.value.map(elem => elem.name),
+          a: sortColumns.value.filter(elem => elem.asc).map(elem => elem.name)
+        }
+      })
+    }
+
+    const sortedResults = computed(() => {
+      if (sortColumns.value.length === 0) return results.value
+      else return [...results.value].sort((a, b) => {
+        for (let column of sortColumns.value) {
+          const asc = column.asc ? -1 : 1
+          if (a[column.name] < b[column.name]) return asc
+          else if (a[column.name] > b[column.name]) return -asc
+        }
+        return 0
+      })
     })
+
+    const pageSortedResults = currentPage => sortedResults.value.slice(
+      perPage.value * (page.value - 1),
+      perPage.value * page.value
+    )
+
+    watch(
+      () => route.query,
+      () => {
+        let srt = route.query.s || []
+        if (!(srt instanceof Array)) srt = [srt]
+        let asc = route.query.a || []
+        if (!(asc instanceof Array)) asc = [asc]
+        sortColumns.value = srt.map(elem => (
+          asc.includes(elem) ? { name: elem, asc: true } : { name: elem }
+        ))
+      },
+      { immediate: true }
+    )
+
+    return {
+      results,
+      loading,
+      columns,
+      page,
+      format,
+      sortIcon,
+      sortIndex,
+      updateSortColumns,
+      removeSortColumns,
+      pageSortedResults
+    }
   }
-
-  const removeSortColumns = name => {
-    sortColumns.value.splice(sortIndex(name), 1)
-    router.push({
-      path: route.path,
-      query: {
-        ...route.query,
-        s: sortColumns.value.map(elem => elem.name),
-        a: sortColumns.value.filter(elem => elem.asc).map(elem => elem.name)
-      }
-    })
-  }
-
-  const sortedResults = computed(() => {
-    if (sortColumns.value.length === 0) return results.value
-    else return [...results.value].sort((a, b) => {
-      for (let column of sortColumns.value) {
-        const asc = column.asc ? -1 : 1
-        if (a[column.name] < b[column.name]) return asc
-        else if (a[column.name] > b[column.name]) return -asc
-      }
-      return 0
-    })
-  })
-
-  const pageSortedResults = currentPage => sortedResults.value.slice(
-    perPage.value * (page.value - 1),
-    perPage.value * page.value
-  )
-
-  watch(
-    () => route.query,
-    newQuery => {
-      let srt = route.query.s || []
-      if (!(srt instanceof Array)) srt = [srt]
-      let asc = route.query.a || []
-      if (!(asc instanceof Array)) asc = [asc]
-      sortColumns.value = srt.map(elem => (
-        asc.includes(elem) ? { name: elem, asc: true } : { name: elem }
-      ))
-    },
-    { immediate: true }
-  )
+}
 </script>
 
 <style>

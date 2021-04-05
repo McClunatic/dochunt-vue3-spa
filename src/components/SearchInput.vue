@@ -6,7 +6,7 @@
         type="search"
         placeholder="Search"
         :value="modelValue"
-        @input="emit('update:modelValue', $event.target.value)"
+        @input="emitValue($event)"
       >
       <span class="icon is-small is-left">
         <i class="fas fa-search" />
@@ -15,11 +15,20 @@
   </div>
 </template>
 
-<script setup>
-  import { defineEmit, defineProps } from 'vue'
+<script>
+import { toRefs } from 'vue'
 
-  const props = defineProps({
-    modelValue: String
-  })
-  const emit = defineEmit(['update:modelValue'])
+export default {
+  props: {
+    modelValue: {
+      type: String,
+      required: true
+    }
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const emitValue = event => emit('update:modelValue', event.target.value)
+    return { emitValue }
+  }
+}
 </script>

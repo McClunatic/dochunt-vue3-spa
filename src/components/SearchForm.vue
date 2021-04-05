@@ -25,27 +25,40 @@
   </div>
 </template>
 
-<script setup>
-  import { computed, ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
-  import SearchInput from './SearchInput.vue'
+<script>
+import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import SearchInput from './SearchInput.vue'
 
-  const router = useRouter()
-  const store = useStore()
+export default {
+  components: { SearchInput },
+  setup() {
+    const router = useRouter()
+    const store = useStore()
 
-  const searchText = ref('')
+    const searchText = ref('')
 
-  const tab = computed(() => store.state.search.tab)
+    const tab = computed(() => store.state.search.tab)
 
-  const doSearch = mode => router.push({
-    path: `/search/${tab.value}`,
-    query: {
-      q: searchText.value,
-      p: 1,
-      m: mode
+    const doSearch = mode => router.push({
+      path: `/search/${tab.value}`,
+      query: {
+        q: searchText.value,
+        p: 1,
+        m: mode
+      }
+    })
+
+    return {
+      router,
+      store,
+      searchText,
+      tab,
+      doSearch
     }
-  })
+  }
+}
 </script>
 
 <style>

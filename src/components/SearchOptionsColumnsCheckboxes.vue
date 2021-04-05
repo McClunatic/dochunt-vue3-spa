@@ -19,19 +19,29 @@
   </div>
 </template>
 
-<script setup>
-  import { computed, ref, watch } from 'vue'
-  import { useStore } from 'vuex'
+<script>
+import { computed, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 
-  const store = useStore()
+export default {
+  setup() {
+    const store = useStore()
 
-  const columns = ref([...store.state.search.columns])
-  const allColumns = computed(() => store.state.search.allColumns)
+    const columns = ref([...store.state.search.columns])
+    const allColumns = computed(() => store.state.search.allColumns)
 
-  watch(
-    columns,
-    newColumns => store.dispatch('search/updateColumns', newColumns)
-  )
+    watch(
+      columns,
+      newColumns => store.dispatch('search/updateColumns', newColumns)
+    )
+
+    return {
+      store,
+      columns,
+      allColumns
+    }
+  }
+}
 </script>
 
 <style>

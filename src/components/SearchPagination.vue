@@ -75,21 +75,35 @@
   </nav>
 </template>
 
-<script setup>
-  import { computed } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
+<script>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
-  const route = useRoute()
-  const router = useRouter()
-  const store = useStore()
+export default {
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
 
-  const page = computed(() => parseInt(route.query.p || '1'))
-  const numPages = computed(() => store.getters['search/numPages'])
-  const tab = computed(() => store.state.search.tab)
+    const page = computed(() => parseInt(route.query.p || '1'))
+    const numPages = computed(() => store.getters['search/numPages'])
+    const tab = computed(() => store.state.search.tab)
 
-  const switchPage = newPage => router.push({
-    path: route.path,
-    query: { ...route.query, p: newPage }
-  })
+    const switchPage = newPage => router.push({
+      path: route.path,
+      query: { ...route.query, p: newPage }
+    })
+
+    return {
+      route,
+      router,
+      store,
+      page,
+      numPages,
+      tab,
+      switchPage
+    }
+  }
+}
 </script>

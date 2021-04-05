@@ -39,23 +39,36 @@
   </div>
 </template>
 
-<script setup>
-  import { computed } from 'vue'
-  import { useRoute, useRouter } from 'vue-router'
-  import { useStore } from 'vuex'
+<script>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
-  const route = useRoute()
-  const router = useRouter()
-  const store = useStore()
+export default {
+  setup() {
+    const route = useRoute()
+    const router = useRouter()
+    const store = useStore()
 
-  const username = computed(() => store.getters['msal/username'])
+    const username = computed(() => store.getters['msal/username'])
 
-  const signIn = async () => {
-    await store.dispatch('msal/signIn')
-    if (route.path === '/unauthenticated') router.push('/')
+    const signIn = async () => {
+      await store.dispatch('msal/signIn')
+      if (route.path === '/unauthenticated') router.push('/')
+    }
+    const signOut = async () => {
+      await store.dispatch('msal/signOut')
+      if (route.path !== '/unauthenticated') router.push('/unauthenticated')
+    }
+
+    return {
+      route,
+      router,
+      store,
+      username,
+      signIn,
+      signOut
+    }
   }
-  const signOut = async () => {
-    await store.dispatch('msal/signOut')
-    if (route.path !== '/unauthenticated') router.push('/unauthenticated')
-  }
+}
 </script>
