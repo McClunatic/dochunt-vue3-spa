@@ -36,8 +36,6 @@ export default {
     })
 
     onMounted(() => {
-      const label = item => results.value[item.dataIndex].title
-
       Chart.register(
         ScatterController,
         LinearScale,
@@ -63,10 +61,12 @@ export default {
               text: 't-SNE Clustering of Article Topics'
             },
             tooltip: {
-              callbacks: { label }
+              callbacks: { 
+                label: item => results.value[item.dataIndex].title
+              }
             }
           },
-          onClick: (event) => {
+          onClick: event => {
             const nearest = chart.value.getElementsAtEventForMode(
               event,
               'nearest',
