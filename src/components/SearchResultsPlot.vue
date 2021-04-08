@@ -28,14 +28,15 @@ export default {
     const results = computed(() => store.state.search.results)
     const chartData = computed(() => store.getters['search/chartData'])
 
-    let chart = ref(null)
+    let state = {chart: null}
 
     watch(chartData, newData => {
-      chart.value.data = newData
-      chart.value.update()
+      state.chart.data = newData
+      state.chart.update()
     })
 
     onMounted(() => {
+      if (state.chart instanceof Chart) return
       Chart.register(
         ScatterController,
         LinearScale,
@@ -45,7 +46,7 @@ export default {
         Title,
         Tooltip
       )
-      chart.value = new Chart(canvas.value, {
+      state.chart = new Chart(canvas.value, {
         type: 'scatter',
         data: chartData.value,
         options: {
@@ -67,7 +68,7 @@ export default {
             }
           },
           onClick: event => {
-            const nearest = chart.value.getElementsAtEventForMode(
+            const nearest = state.chart.getElementsAtEventForMode(
               event,
               'nearest',
               {axis: 'xy', intersect: true}

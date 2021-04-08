@@ -30,7 +30,7 @@ const getters = {
     return Math.ceil(state.results.length / state.perPage)
   },
   chartData(state) {
-    if (state.datasets === null) return []
+    if (state.datasets === null) return {datasets: [{data: []}]}
     const colors = [
       'rgba(31, 119, 180, 0.5)',
       'rgba(255, 127, 14, 0.5)',
@@ -95,6 +95,8 @@ const actions = {
     let datasets = []
     try {
       commit('updateLoading', true)
+      commit('updateDatasets', datasets)
+      commit('updateResults', results)
       const opts = { params: { q } }
       if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
         const response = await msalInstance.acquireTokenSilent(tokenRequest)
