@@ -51,7 +51,7 @@ const updateSearchResults = (to, from) => {
   const toQuery = to.query.q
   const toMode = to.query.m
   const fromQuery = from.query.q
-  const fromMode = to.query.m
+  const fromMode = from.query.m
   if (toQuery === undefined) return
   if (fromQuery === undefined || toQuery !== fromQuery || toMode !== fromMode)
     store.dispatch('search/updateResults', { q: toQuery, m: toMode })
