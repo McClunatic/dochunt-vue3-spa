@@ -9,7 +9,16 @@
 <script>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import { Chart } from 'chart.js'
+import {
+  Chart,
+  ScatterController,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Legend,
+  Title,
+  Tooltip
+ } from 'chart.js'
 
 export default {
   setup() {
@@ -27,22 +36,34 @@ export default {
     })
 
     onMounted(() => {
-      // TODO: find out why tooltip options aren't working
-      const label = item => results.value[item.index].title
-      Chart.defaults.scatter.tooltips.callbacks.label = label
+      const label = item => results.value[item.dataIndex].title
 
+      Chart.register(
+        ScatterController,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Legend,
+        Title,
+        Tooltip
+      )
       chart.value = new Chart(canvas.value, {
         type: 'scatter',
         data: chartData.value,
         options: {
-          title: {
-            display: true,
-            text: 't-SNE Clustering of Article Topics'
-          },
           elements: {
             point: {
               radius: ctx => ctx.dataIndex === 0 ? 6 : 3,
               display: true
+            }
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: 't-SNE Clustering of Article Topics'
+            },
+            tooltip: {
+              callbacks: { label }
             }
           },
           onClick: (event) => {
@@ -52,11 +73,15 @@ export default {
               {axis: 'xy', intersect: true}
             )
             if (nearest.length === 0 || results.value.length === 0) return
-            window.open(results.value[nearest[0]._index].href, '_blank').focus()
+            window.open(results.value[nearest[0].index].href, '_blank').focus()
           }
         }
       })
     })
+
+    return {
+      canvas
+    }
   }
 }
 </script>
