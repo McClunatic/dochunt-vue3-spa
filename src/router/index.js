@@ -6,39 +6,52 @@ import Search from '../views/Search.vue'
 import SearchResultsTable from '../components/SearchResultsTable.vue'
 import SearchResultsCards from '../components/SearchResultsCards.vue'
 import SearchResultsPlot from '../components/SearchResultsPlot.vue'
+import Redirect from '../views/Redirect.vue'
 import Unauthenticated from '../views/Unauthenticated.vue'
 
 const account = computed(() => store.state.msal.account);
+const instance = computed(() => store.getters['msal/instance'])
 
 const routes = [
   {
     path: '/',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/search',
     component: Search,
+    meta: { requiresAuth: true },
     children: [
       {
         path: 'table',
         component: SearchResultsTable,
+        meta: { requiresAuth: true },
         beforeEnter: (to, from) => store.dispatch('search/updateTab', 'table')
       },
       {
         path: 'cards',
         component: SearchResultsCards,
+        meta: { requiresAuth: true },
         beforeEnter: (to, from) => store.dispatch('search/updateTab', 'cards')
       },
       {
         path: 'plot',
         component: SearchResultsPlot,
+        meta: { requiresAuth: true },
         beforeEnter: (to, from) => store.dispatch('search/updateTab', 'plot')
       }
     ]
   },
   {
+    path: '/redirect',
+    component: Redirect,
+    meta: { requiresAuth: false }
+  },
+  {
     path: '/unauthenticated',
-    component: Unauthenticated
+    component: Unauthenticated,
+    meta: { requiresAuth: false }
   }
 ]
 
@@ -76,17 +89,29 @@ router.afterEach((to, from) => {
   animatePagination(to, from)
 })
 
-if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
-  router.beforeEach(async (to) => {
-    if (to.path !== '/unauthenticated' && account.value === null) {
-      try {
-        await store.dispatch('msal/signIn')
-      } catch (error) {
-        console.log(error)
-        return '/unauthenticated'
-      }
+const handleLoginPopup = async to => {
+  if (to.meta.requiresAuth && account.value === null) {
+    try {
+      await store.dispatch('msal/signIn')
+    } catch (error) {
+      console.log(error)
+      return '/unauthenticated'
     }
-  })
+  }
 }
+
+const handleLoginRedirect = async to => {
+  let loginResponse = await instance.value.handleRedirectPromise()
+  if (loginResponse !== null)
+    store.commit('msal/signIn', loginResponse.account)
+  if (to.meta.requiresAuth && account.value === null)
+    store.dispatch('msal/signInRedirect')
+}
+
+router.beforeEach(
+  import.meta.env.VITE_AUTH == 'popup'
+    ? handleLoginPopup : import.meta.env.VITE_AUTH == 'redirect'
+    ? handleLoginRedirect : () => {}
+)
 
 export default router

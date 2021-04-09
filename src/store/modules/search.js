@@ -83,9 +83,7 @@ const mutations = {
 // actions
 const actions = {
   async updateResults({ commit, rootState, rootGetters }, { q, m }) {
-    const endpoint = import.meta.env.PROD
-      ? 'https://paper-scope-6-api.azurewebsites.net'
-      : 'http://127.0.0.1:21383'
+    const endpoint = import.meta.env.VITE_API_URI
     const msalInstance = rootGetters['msal/instance']
     const tokenRequest = {
       account: rootState.msal.account,
@@ -98,7 +96,10 @@ const actions = {
       commit('updateDatasets', datasets)
       commit('updateResults', results)
       const opts = { params: { q } }
-      if (import.meta.env.VITE_AUTH_ENABLED == 'true') {
+      if (
+        import.meta.env.VITE_AUTH == 'login' ||
+        import.meta.env.VITE_AUTH == 'redirect'
+      ) {
         const response = await msalInstance.acquireTokenSilent(tokenRequest)
         opts['headers'] = { Authorization: `Bearer ${response.accessToken}` }
       }

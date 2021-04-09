@@ -97,7 +97,10 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const store = useStore()
-    const authEnabled = import.meta.env.VITE_AUTH_ENABLED == 'true'
+    const authEnabled = (
+      import.meta.env.VITE_AUTH == 'popup' ||
+      import.meta.env.VITE_AUTH == 'redirect'
+    )
 
     const isActive = ref(false)
     const searchText = ref('')

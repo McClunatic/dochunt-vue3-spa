@@ -23,7 +23,9 @@ jobs:
 
     - name: Set up vite environment variables
       run: |
-        echo "VITE_AUTH_ENABLED=true" >> $GITHUB_ENV
+        echo "VITE_AUTH=redirect" >> $GITHUB_ENV
+        echo "VITE_REDIRECT_URI=https://paper-scope-6.azurewebsites.net/redirect" >> $GITHUB_ENV
+        echo "VITE_API_URI=https://paper-scope-6-api.azurewebsites.net" >> $GITHUB_ENV
 
     - name: npm install, build, and test
       run: |

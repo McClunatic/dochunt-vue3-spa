@@ -52,10 +52,17 @@ export default {
 
     const username = computed(() => store.getters['msal/username'])
 
-    const signIn = async () => {
+    const signInPopup = async () => {
       await store.dispatch('msal/signIn')
-      if (route.path === '/unauthenticated') router.push('/')
+      if (!route.meta.requiresAuth) router.push('/')
     }
+    const signInRedirect = () => {
+      store.dispatch('msal/signInRedirect')
+      if (!route.meta.requiresAuth) router.push('/')
+    }
+    const signIn = import.meta.env.VITE_AUTH == 'login'
+      ? signInPopup : import.meta.env.VITE_AUTH == 'redirect'
+      ? signInRedirect : () => {}
     const signOut = async () => {
       await store.dispatch('msal/signOut')
       if (route.path !== '/unauthenticated') router.push('/unauthenticated')

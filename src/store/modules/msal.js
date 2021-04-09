@@ -20,9 +20,7 @@ const state = () => ({
       'https://clunacy.b2clogin.com/clunacy.onmicrosoft.com/' +
       'B2C_1A_signup_signin',
       knownAuthories: 'clunacy.b2clogin.com',
-      redirectUri: import.meta.env.PROD
-        ? 'https://paper-scope-6.azurewebsites.net/'
-        : 'https://localhost:3000/'
+      redirectUri: import.meta.env.VITE_REDIRECT_URI
     },
     cache: {
       cacheLocation: 'localStorage',
@@ -58,10 +56,12 @@ const mutations = {
     }
   },
   signIn(state, account) {
+    if (!state.instanceCreated) commit('createInstance')
     state.account = account
     msalInstance.setActiveAccount(account)
   },
   signOut(state) {
+    if (!state.instanceCreated) commit('createInstance')
     state.account = null
     msalInstance.logout({ postLogoutRedirectUri: '/unauthenticated' })
   }
@@ -88,6 +88,23 @@ const actions = {
       loginResponse = await msalInstance.loginPopup(loginRequest)
     }
     commit('signIn', loginResponse.account)
+  },
+  signInRedirect({ commit, state }) {
+    if (!state.instanceCreated) commit('createInstance')
+    const loginRequest = {
+      scopes: state.scopes,
+      loginHint: null
+    }
+    msalInstance.ssoSilent(loginRequest)
+      .then(loginResponse => {
+        commit('signIn', loginResponse.account)
+      })
+      .catch(error => {
+        if (!(error instanceof InteractionRequiredAuthError) &&
+            !(error instanceof BrowserAuthError) )
+          throw error
+        return msalInstance.loginRedirect(loginRequest)
+      })
   },
   signOut(context) {
     context.commit('signOut')
