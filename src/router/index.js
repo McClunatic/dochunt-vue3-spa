@@ -9,6 +9,8 @@ import SearchResultsPlot from '../components/SearchResultsPlot.vue'
 import Redirect from '../views/Redirect.vue'
 import Unauthenticated from '../views/Unauthenticated.vue'
 
+const numBest = computed(() => store.state.search.numBest);
+const numResults = computed(() => store.state.search.results.length);
 const account = computed(() => store.state.msal.account);
 const instance = computed(() => store.getters['msal/instance'])
 
@@ -67,6 +69,8 @@ const updateSearchResults = (to, from) => {
   const fromMode = from.query.m
   if (toQuery === undefined) return
   if (fromQuery === undefined || toQuery !== fromQuery || toMode !== fromMode)
+    store.dispatch('search/updateResults', { q: toQuery, m: toMode })
+  else if (numBest.value > numResults.value)
     store.dispatch('search/updateResults', { q: toQuery, m: toMode })
 }
 
