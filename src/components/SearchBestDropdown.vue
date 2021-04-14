@@ -6,11 +6,14 @@
   >
     <div class="dropdown-trigger">
       <button
-        class="button is-small"
+        class="button is-light"
         aria-haspopup="true"
-        aria-controls="per-page-dropdown-menu"
+        aria-controls="num-best-dropdown-menu"
       >
-        <span>{{ perPage }} results per page</span>
+        <span class="icon is-small">
+          <i class="fas fa-award" />
+        </span>
+        <span>{{ numBest }}</span>
         <span class="icon is-small">
           <i
             class="fas fa-angle-down"
@@ -20,19 +23,19 @@
       </button>
     </div>
     <div
-      id="per-page-dropdown-menu"
+      id="num-best-dropdown-menu"
       class="dropdown-menu"
       role="menu"
     >
       <div class="dropdown-content">
         <a
-          v-for="option in perPageOptions"
+          v-for="option in numBestOptions"
           :key="option"
           class="dropdown-item"
-          :class="{ 'is-active': option == perPage }"
-          @click="store.dispatch('search/updatePerPage', option)"
+          :class="{ 'is-active': option == numBest }"
+          @click="store.dispatch('search/updateNumBest', option)"
         >
-          <span>{{ option }} results per page</span>
+          <span>{{ option }} best results</span>
         </a>
       </div>
     </div>
@@ -47,24 +50,21 @@ export default {
   setup() {
     const store = useStore()
     const isActive = ref(false)
-    const perPageOptions = [3, 5, 10, 20, 50]
+    const numBestOptions = [10, 50, 500, 10000]
 
-    const perPage = computed(() => store.state.search.perPage)
+    const numBest = computed(() => store.state.search.numBest)
 
     return {
       store,
       isActive,
-      perPageOptions,
-      perPage
+      numBestOptions,
+      numBest
     }
   }
 }
 </script>
 
-<style scoped>
-  .dropdown {
-    margin-left: 1.5rem;
-  }
+<style>
   .dropdown-content > a {
     font-size: 0.75rem;
   }

@@ -1,6 +1,6 @@
 <template>
-  <div class="field">
-    <p class="control has-icons-left">
+  <div class="field has-addons">
+    <p class="control has-icons-left is-expanded">
       <input
         class="input"
         type="search"
@@ -12,13 +12,18 @@
         <i class="fas fa-search" />
       </span>
     </p>
+    <div class="control">
+      <search-best-dropdown />
+    </div>
   </div>
 </template>
 
 <script>
 import { toRefs } from 'vue'
+import SearchBestDropdown from './SearchBestDropdown.vue'
 
 export default {
+  components: { SearchBestDropdown },
   props: {
     modelValue: {
       type: String,

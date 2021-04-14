@@ -7,6 +7,7 @@ const state = () => ({
   loading: false,
   time: 0.0,
   tab: 'table',
+  numBest: 50,
   perPage: 5,
   columns: ['title', 'author', 'date', 'similarity'],
   allColumns: [
@@ -68,6 +69,9 @@ const mutations = {
   updateTab(state, tab) {
     state.tab = tab
   },
+  updateNumBest(state, numBest) {
+    state.numBest = numBest
+  },
   updatePerPage(state, perPage) {
     state.perPage = perPage
   },
@@ -119,6 +123,9 @@ const actions = {
   },
   async updateTab(context, tab) {
     context.commit('updateTab', tab)
+  },
+  async updateNumBest(context, numBest) {
+    context.commit('updateNumBest', numBest)
   },
   async updatePerPage(context, perPage) {
     context.commit('updatePerPage', perPage)
