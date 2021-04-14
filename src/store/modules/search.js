@@ -86,7 +86,7 @@ const mutations = {
 
 // actions
 const actions = {
-  async updateResults({ commit, rootState, rootGetters }, { q, m }) {
+  async updateResults({ state, commit, rootState, rootGetters }, { q, m }) {
     const endpoint = import.meta.env.VITE_API_URI
     const msalInstance = rootGetters['msal/instance']
     const tokenRequest = {
@@ -99,7 +99,7 @@ const actions = {
       commit('updateLoading', true)
       commit('updateDatasets', datasets)
       commit('updateResults', results)
-      const opts = { params: { q } }
+      const opts = { params: { q, best: state.numBest } }
       if (
         import.meta.env.VITE_AUTH == 'login' ||
         import.meta.env.VITE_AUTH == 'redirect'
