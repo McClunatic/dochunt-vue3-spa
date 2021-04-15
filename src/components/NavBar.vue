@@ -62,12 +62,14 @@
           <div class="buttons">
             <a
               class="button is-primary"
+              :disabled="isDisabled('lda')"
               @click.stop="doSearch('lda')"
             >
               Scope Search
             </a>
             <a
               class="button"
+              :disabled="isDisabled('elk')"
               @click.stop="doSearch('elk')"
             >
               Search
@@ -108,6 +110,17 @@ export default {
 
     const tab = computed(() => store.state.search.tab)
     const isSearch = computed(() => route.path.startsWith('/search'))
+    const numResults = computed(() => store.state.search.results.length)
+    const numBest = computed(() => store.state.search.numBest)
+
+    const isDisabled = mode => {
+      const disabled = !(
+        route.query.q !== searchText.value ||
+        numBest.value > numResults.value ||
+        route.query.m !== mode
+      )
+      return disabled || null
+    }
 
     const toggleMenu = () => {
       isActive.value = !isActive.value
@@ -137,6 +150,7 @@ export default {
       searchText,
       tab,
       isSearch,
+      isDisabled,
       toggleMenu,
       doSearch
     }
