@@ -7,5 +7,20 @@ const debug = process.env.NODE_ENV !== 'production'
 export default createStore({
   modules: { msal, search },
   strict: debug,
-  plugins: debug ? [createLogger()] : []
+  plugins: debug ? [createLogger()] : [],
+  state: {
+    theme: window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+  },
+  mutations: {
+    updateTheme(state, theme) {
+      state.theme = theme
+    }
+  },
+  actions: {
+    updateTheme(context, theme) {
+      context.commit('updateTheme', theme)
+    }
+  }
 })

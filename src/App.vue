@@ -1,27 +1,31 @@
 <template>
-  <div class="content">
-    <nav-bar />
-    <router-view />
-    <footer />
-  </div>
+  <dark v-if="isDark" class="content" />
+  <light v-else class="content" />
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
-import NavBar from './components/NavBar.vue'
+import Light from './themes/Light.vue'
+import Dark from './themes/Dark.vue'
 
 export default {
-  components: { NavBar },
+  components: { Light, Dark },
   setup() {
     const store = useStore()
     store.dispatch('msal/createInstance')
+
+    const isDark = computed(() => (
+      store.state.theme === 'dark'
+    ))
+
+    return { isDark }
   }
 }
 </script>
 
 <style lang="scss">
   @import 'animate.css/animate.min.css';
-  @import 'bulma/css/bulma.min.css';
   @import '@fortawesome/fontawesome-free/css/all.min.css';
 
   html, body, #app {
