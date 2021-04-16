@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="dropdown"
     class="dropdown"
     :class="{ 'is-active': isActive }"
     @click="isActive = !isActive"
@@ -40,20 +41,29 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
   setup() {
     const store = useStore()
     const isActive = ref(false)
+    const dropdown = ref(null)
     const perPageOptions = [3, 5, 10, 20, 50]
 
     const perPage = computed(() => store.state.search.perPage)
 
+    const close = event => {
+      if (!dropdown.value.contains(event.target)) isActive.value = false
+    }
+
+    onMounted(() => document.addEventListener('click', close))
+    onUnmounted(() => document.removeEventListener('click', close))
+
     return {
       store,
       isActive,
+      dropdown,
       perPageOptions,
       perPage
     }
