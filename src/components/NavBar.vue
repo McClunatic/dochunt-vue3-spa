@@ -57,8 +57,8 @@
         >
           <search-input
             v-model="searchText"
-            @keyup.enter="doSearch('lda')"
-            @keyup.shift.enter="doSearch('elk')"
+            @keyup.enter.exact="doSearch('lda')"
+            @keyup.enter.shift.exact="doSearch('elk')"
           />
         </div>
         <div
