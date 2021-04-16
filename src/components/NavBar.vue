@@ -45,6 +45,12 @@
         >
           Docs
         </a>
+        <a
+          class="navbar-item"
+          @click="toggleTheme"
+        >
+          {{ theme }}
+        </a>
         <div
           v-if="isSearch"
           class="navbar-item"
@@ -61,7 +67,7 @@
         >
           <div class="buttons">
             <a
-              class="button is-primary"
+              class="button is-link"
               :disabled="isDisabled('lda')"
               @click.stop="doSearch('lda')"
             >
@@ -108,10 +114,18 @@ export default {
     const isActive = ref(false)
     const searchText = ref('')
 
+    const theme = computed(() => store.state.theme)
     const tab = computed(() => store.state.search.tab)
     const isSearch = computed(() => route.path.startsWith('/search'))
     const numResults = computed(() => store.state.search.results.length)
     const numBest = computed(() => store.state.search.numBest)
+
+    const toggleTheme = () => {
+      if (theme.value === 'dark')
+        store.dispatch('updateTheme', 'light')
+      else
+        store.dispatch('updateTheme', 'dark')
+    }
 
     const isDisabled = mode => {
       const disabled = !(
@@ -142,14 +156,12 @@ export default {
     )
 
     return {
-      route,
-      router,
-      store,
+      theme,
       authEnabled,
       isActive,
       searchText,
-      tab,
       isSearch,
+      toggleTheme,
       isDisabled,
       toggleMenu,
       doSearch

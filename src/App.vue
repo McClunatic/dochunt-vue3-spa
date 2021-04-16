@@ -1,25 +1,31 @@
 <template>
-  <dark v-if="isDark" class="content" />
-  <light v-else class="content" />
+  <div class="content">
+    <nav-bar />
+    <router-view />
+    <footer />
+  </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useStore } from 'vuex'
-import Light from './themes/Light.vue'
-import Dark from './themes/Dark.vue'
+import NavBar from './components/NavBar.vue'
 
 export default {
-  components: { Light, Dark },
+  components: { NavBar },
   setup() {
     const store = useStore()
     store.dispatch('msal/createInstance')
 
-    const isDark = computed(() => (
-      store.state.theme === 'dark'
+    const theme = computed(() => store.state.theme)
+
+    const setTheme = () => ['dark', 'light'].forEach(thm => (
+      document.getElementById(thm).media = theme.value === thm ? 'all' : 'none'
     ))
 
-    return { isDark }
+    setTheme()
+
+    watch(theme, setTheme)
   }
 }
 </script>
@@ -36,5 +42,9 @@ export default {
     height: 100%;
     display: flex;
     flex-direction: column;
+  }
+
+  nav.navbar {
+    border-radius: 0;
   }
 </style>

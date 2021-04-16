@@ -8,7 +8,7 @@
     <div class="field is-grouped centered">
       <div class="control">
         <a
-          class="button is-primary"
+          class="button is-link"
           @click.stop="doSearch('lda')"
         >
           Scope Search

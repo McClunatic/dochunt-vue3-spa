@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="is-flex">
     <div
       v-if="username"
       class="navbar-item has-dropdown is-hoverable"
