@@ -37,3 +37,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  p.control {
+    margin-bottom: 0 !important;
+  }
+</style>

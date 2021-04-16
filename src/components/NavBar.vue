@@ -154,9 +154,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .field > p.control {
-    margin-bottom: 0 !important;
-  }
-</style>

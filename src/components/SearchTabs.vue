@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   div.tabs > ul {
     margin-left: 1em;
     margin-top: 0.5em;

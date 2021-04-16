@@ -89,7 +89,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .card {
     padding: 0.25rem 0.75rem;
     margin-bottom: 0.5rem;

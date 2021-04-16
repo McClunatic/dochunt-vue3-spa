@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .dropdown-content > a {
     font-size: 0.75rem;
   }

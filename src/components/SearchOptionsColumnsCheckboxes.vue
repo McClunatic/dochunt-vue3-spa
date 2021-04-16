@@ -44,12 +44,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   label.is-small {
     font-size: 0.75rem;
   }
 
-  .field {
+  div.field {
     margin-left: 1.5rem;
   }
 </style>

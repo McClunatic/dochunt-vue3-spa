@@ -41,7 +41,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   div.column.search-tabs {
     margin-bottom: 0;
   }

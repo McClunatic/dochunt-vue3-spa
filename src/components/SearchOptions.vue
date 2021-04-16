@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .font-small {
     font-size: 0.9rem;
   }

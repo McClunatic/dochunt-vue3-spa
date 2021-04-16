@@ -62,7 +62,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .centered {
     justify-content: center !important;
   }

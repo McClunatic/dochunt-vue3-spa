@@ -180,7 +180,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   p.container {
     font-size: 0.9rem;
     margin-top: 0.9rem;
