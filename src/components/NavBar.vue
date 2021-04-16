@@ -45,12 +45,6 @@
         >
           Docs
         </a>
-        <a
-          class="navbar-item"
-          @click="toggleTheme"
-        >
-          {{ theme }}
-        </a>
         <div
           v-if="isSearch"
           class="navbar-item"
@@ -83,11 +77,9 @@
           </div>
         </div>
       </div>
-      <div
-        v-if="authEnabled"
-        class="navbar-end"
-      >
-        <nav-bar-user-element />
+      <div class="navbar-end">
+        <nav-bar-theme-switch />
+        <nav-bar-user-element v-if="authEnabled" />
       </div>
     </div>
   </nav>
@@ -99,9 +91,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import SearchInput from './SearchInput.vue'
 import NavBarUserElement from './NavBarUserElement.vue'
+import NavBarThemeSwitch from './NavBarThemeSwitch.vue'
 
 export default {
-  components: { SearchInput, NavBarUserElement },
+  components: { SearchInput, NavBarUserElement, NavBarThemeSwitch },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -119,13 +112,6 @@ export default {
     const isSearch = computed(() => route.path.startsWith('/search'))
     const numResults = computed(() => store.state.search.results.length)
     const numBest = computed(() => store.state.search.numBest)
-
-    const toggleTheme = () => {
-      if (theme.value === 'dark')
-        store.dispatch('updateTheme', 'light')
-      else
-        store.dispatch('updateTheme', 'dark')
-    }
 
     const isDisabled = mode => {
       const disabled = !(
@@ -161,7 +147,6 @@ export default {
       isActive,
       searchText,
       isSearch,
-      toggleTheme,
       isDisabled,
       toggleMenu,
       doSearch
