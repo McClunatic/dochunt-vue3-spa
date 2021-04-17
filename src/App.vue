@@ -19,9 +19,10 @@ export default {
 
     const theme = computed(() => store.state.theme)
 
-    const setTheme = () => ['dark', 'light'].forEach(thm => (
-      document.getElementById(thm).media = theme.value === thm ? 'all' : 'none'
-    ))
+    const setTheme = () => ['dark', 'light'].forEach(thm => {
+      const elem = document.getElementById(thm)
+      if (elem !== null) elem.media = theme.value === thm ? 'all' : 'none'
+    })
 
     setTheme()
 
