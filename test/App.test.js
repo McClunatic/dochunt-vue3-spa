@@ -20,6 +20,14 @@ const router = createRouter({
   routes: [{ path: '/', component: { template: 'Youkoso boku no app e' }}],
 })
 
+document.body.innerHTML = `
+  <div>
+    <link id="dark" media="none">
+    <link id="light" media="none">
+    <div id="app"></div>
+  </div>
+`
+
 describe('App.test.js', () => {
   beforeEach(async () => {
     router.push('/')
@@ -27,6 +35,7 @@ describe('App.test.js', () => {
   })
   test('renders a nav bar', async () => {
     const wrapper = mount(App, {
+      attachTo: document.getElementById('app'),
       global: {
         plugins: [store, router],
         stubs: {
