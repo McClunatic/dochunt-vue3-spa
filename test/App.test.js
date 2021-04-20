@@ -12,7 +12,10 @@ const msal = {
 }
 
 const store = createStore({
-  modules: { msal }
+  modules: { msal },
+  actions: {
+    updateTheme() {}
+  }
 })
 
 const router = createRouter({
