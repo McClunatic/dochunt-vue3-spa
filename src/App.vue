@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { computed, watch } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import NavBar from './components/NavBar.vue'
 
@@ -19,19 +19,39 @@ export default {
 
     const theme = computed(() => store.state.theme)
 
-    const setTheme = () => ['dark', 'light'].forEach(thm => {
-      const elem = document.getElementById(thm)
-      if (elem !== null) elem.media = theme.value === thm ? 'all' : 'none'
-    })
+    const setDarkTheme = () => {
+      let link = document.getElementById('dark-theme')
+      if (link === null) {
+        const head = document.getElementsByTagName('head')[0]
+        link = document.createElement('link')
+        link.id = 'dark-theme'
+        link.type = 'text/css'
+        link.rel = 'stylesheet'
+        link.href = `/node_modules/bulmaswatch/darkly/bulmaswatch.min.css`
+        head.appendChild(link)
+      }
+      link.media = theme.value === 'dark'
+        ? `(prefers-color-scheme: dark)`
+        : 'none'
+    }
 
-    setTheme()
+    onMounted(() => store.dispatch(
+      'updateTheme',
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+    ))
 
-    watch(theme, setTheme)
+    setDarkTheme()
+
+    watch(theme, setDarkTheme)
   }
 }
 </script>
 
 <style lang="scss">
+  @import 'bulma/css/bulma.min.css';
+  @import 'bulmaswatch/flatly/bulmaswatch.min.css';
   @import 'animate.css/animate.min.css';
   @import '@fortawesome/fontawesome-free/css/all.min.css';
 

@@ -9,9 +9,7 @@ export default createStore({
   strict: debug,
   plugins: debug ? [createLogger()] : [],
   state: {
-    theme: window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light'
+    theme: 'dark'
   },
   mutations: {
     updateTheme(state, theme) {
