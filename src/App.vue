@@ -34,13 +34,6 @@ export default {
       link.href = `/${themeName}.bulmaswatch.min.css`
     }
 
-    onMounted(() => {
-      let preferred = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light'
-      if (theme.value !== preferred) store.dispatch('updateTheme', preferred)
-    })
-
     setDarkTheme()
 
     watch(theme, setDarkTheme)
