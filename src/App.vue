@@ -20,11 +20,11 @@ export default {
     const theme = computed(() => store.state.theme)
 
     const setDarkTheme = () => {
-      let link = document.getElementById('dark-theme')
+      let link = document.getElementById('app-theme')
       if (link === null) {
         const head = document.getElementsByTagName('head')[0]
         link = document.createElement('link')
-        link.id = 'dark-theme'
+        link.id = 'app-theme'
         link.type = 'text/css'
         link.rel = 'stylesheet'
         link.media = 'all'
@@ -50,7 +50,6 @@ export default {
 
 <style lang="scss">
   @import 'bulma/css/bulma.min.css';
-  @import 'bulmaswatch/flatly/bulmaswatch.min.css';
   @import 'animate.css/animate.min.css';
   @import '@fortawesome/fontawesome-free/css/all.min.css';
 
