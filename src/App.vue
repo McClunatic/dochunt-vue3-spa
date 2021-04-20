@@ -27,20 +27,19 @@ export default {
         link.id = 'dark-theme'
         link.type = 'text/css'
         link.rel = 'stylesheet'
-        link.href = `/node_modules/bulmaswatch/darkly/bulmaswatch.min.css`
+        link.media = 'all'
         head.appendChild(link)
       }
-      link.media = theme.value === 'dark'
-        ? `(prefers-color-scheme: dark)`
-        : 'none'
+      const themeName = theme.value === 'dark' ? 'darkly' : 'flatly'
+      link.href = `/${themeName}.bulmaswatch.min.css`
     }
 
-    onMounted(() => store.dispatch(
-      'updateTheme',
-      window.matchMedia('(prefers-color-scheme: dark)').matches
+    onMounted(() => {
+      let preferred = window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light'
-    ))
+      if (theme.value !== preferred) store.dispatch('updateTheme', preferred)
+    })
 
     setDarkTheme()
 
